@@ -9,8 +9,8 @@ export function ShellMain({ navbar, footer, children }: { navbar: ReactNode; foo
   return (
     <main
       className={cn(
-        "flex min-h-screen flex-col p-6 transition-[margin-left] duration-300 ease-smooth xl:px-10 xl:py-8",
-        minimized ? "xl:ml-sidebar-min" : "xl:ml-sidebar",
+        "flex min-h-screen flex-col p-6 transition-[margin-left] duration-300 ease-smooth lg:px-10 lg:py-8",
+        minimized ? "lg:ml-sidebar-min" : "lg:ml-sidebar",
       )}
     >
       {navbar}

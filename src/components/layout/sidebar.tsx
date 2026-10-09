@@ -18,7 +18,7 @@ interface SidebarProps {
 export function Sidebar({ sections, user, homeHref }: SidebarProps) {
   const pathname = usePathname();
   const { minimized, mobileOpen, setMobileOpen } = useSidebar();
-  const labelClass = minimized ? "xl:hidden" : undefined;
+  const labelClass = minimized ? "lg:hidden" : undefined;
 
   useEffect(() => {
     setMobileOpen(false);
@@ -30,14 +30,14 @@ export function Sidebar({ sections, user, homeHref }: SidebarProps) {
         id="app-sidebar"
         aria-label="Menú lateral"
         className={cn(
-          "fixed top-0 left-0 z-[1030] flex h-screen w-sidebar flex-col overflow-x-hidden overflow-y-auto border-r border-white/10 bg-forest-dark px-6 py-8 transition-all duration-300 ease-smooth xl:translate-x-0 xl:shadow-none",
+          "fixed top-0 left-0 z-[1030] flex h-screen w-sidebar flex-col overflow-x-hidden overflow-y-auto border-r border-white/10 bg-forest-dark px-6 py-8 transition-all duration-300 ease-smooth lg:translate-x-0 lg:shadow-none",
           mobileOpen ? "translate-x-0 shadow-lg" : "-translate-x-full",
-          minimized && "xl:w-sidebar-min xl:px-3",
+          minimized && "lg:w-sidebar-min lg:px-3",
         )}
       >
         <Link
           href={homeHref}
-          className={cn("group mb-10 flex items-center gap-3 text-white hover:text-white", minimized && "xl:justify-center")}
+          className={cn("group mb-10 flex items-center gap-3 text-white hover:text-white", minimized && "lg:justify-center")}
         >
           <i
             className="bi bi-asterisk inline-block text-2xl text-lime transition-all duration-300 group-hover:scale-110 group-hover:rotate-90 group-hover:text-lime-hover"
@@ -71,7 +71,7 @@ export function Sidebar({ sections, user, homeHref }: SidebarProps) {
                         className={cn(
                           "relative flex items-center gap-[.85rem] rounded-md px-[.85rem] py-3 text-[.95rem] whitespace-nowrap transition-all duration-200 hover:bg-white/5 hover:text-white",
                           active ? "bg-white/5 font-semibold text-white" : "font-medium text-sidebar-muted",
-                          minimized && "xl:justify-center",
+                          minimized && "lg:justify-center",
                         )}
                       >
                         {active && (
@@ -79,12 +79,12 @@ export function Sidebar({ sections, user, homeHref }: SidebarProps) {
                             aria-hidden="true"
                             className={cn(
                               "absolute top-[15%] -left-6 h-[70%] w-1 rounded-r-[4px] bg-lime",
-                              minimized && "xl:-left-3",
+                              minimized && "lg:-left-3",
                             )}
                           />
                         )}
                         <i
-                          className={cn("bi", item.icon, active && "text-lime", minimized ? "text-[1.15rem] xl:text-[1.35rem]" : "text-[1.15rem]")}
+                          className={cn("bi", item.icon, active && "text-lime", minimized ? "text-[1.15rem] lg:text-[1.35rem]" : "text-[1.15rem]")}
                           aria-hidden="true"
                         />
                         <span className={labelClass}>{item.label}</span>
@@ -100,7 +100,7 @@ export function Sidebar({ sections, user, homeHref }: SidebarProps) {
         <div
           className={cn(
             "mt-auto flex items-center gap-3 rounded-xl border border-white/10 bg-white/3 p-[.85rem]",
-            minimized && "xl:justify-center",
+            minimized && "lg:justify-center",
           )}
         >
           <Avatar user={user} size="lg" tone="lime" />
@@ -115,7 +115,7 @@ export function Sidebar({ sections, user, homeHref }: SidebarProps) {
         <div
           aria-hidden="true"
           onClick={() => setMobileOpen(false)}
-          className="fixed inset-0 z-[1025] animate-fade-in bg-forest-dark/40 backdrop-blur-[4px] xl:hidden"
+          className="fixed inset-0 z-[1025] animate-fade-in bg-forest-dark/40 backdrop-blur-[4px] lg:hidden"
         />
       )}
     </>

@@ -17,7 +17,7 @@ export function SidebarToggle() {
         aria-label={minimized ? "Expandir menú" : "Minimizar menú"}
         aria-controls="app-sidebar"
         aria-expanded={!minimized}
-        className={cn(squareButton, "hidden text-[1.1rem] xl:flex")}
+        className={cn(squareButton, "hidden text-[1.1rem] lg:flex")}
       >
         <i className={cn("bi", minimized ? "bi-chevron-bar-right" : "bi-chevron-bar-left")} aria-hidden="true" />
       </button>
@@ -27,7 +27,7 @@ export function SidebarToggle() {
         aria-label="Abrir menú"
         aria-controls="app-sidebar"
         aria-expanded={mobileOpen}
-        className={cn(squareButton, "text-xl xl:hidden")}
+        className={cn(squareButton, "text-xl lg:hidden")}
       >
         <i className="bi bi-list" aria-hidden="true" />
       </button>
