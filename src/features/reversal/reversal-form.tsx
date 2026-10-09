@@ -1,9 +1,10 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import type { OperationResult, ReversalConfig, ReversalType, ToastInput } from "@/types";
-import { formatDateTime, formatLongDateTime } from "@/lib/format";
-import { useSimulatedRequest } from "@/lib/use-simulated-request";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import type { OperationResult, ReversalConfig, ReversalType } from "@/types";
+import { formatDateTime } from "@/lib/format";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,20 +12,11 @@ import { Modal } from "@/components/ui/modal";
 import { ResultCard } from "@/components/ui/result-card";
 import { Tabs } from "@/components/ui/tabs";
 import { useToast } from "@/components/ui/toast";
-
-export interface ReversalMockResult {
-  aprobacion: string;
-  referencia: string;
-  tarjeta: string;
-}
+import { ReversalSchema, type ReversalValues } from "@/features/reversal/schema";
 
 interface ReversalFormProps {
   type: ReversalType;
   configs: Record<ReversalType, ReversalConfig>;
-  mockResult: ReversalMockResult;
-  successToast: ToastInput;
-  errorToast: ToastInput;
-  latency: number;
 }
 
 const toneByType: Record<ReversalType, { button: "danger" | "primary"; modalIcon: string }> = {
@@ -32,47 +24,83 @@ const toneByType: Record<ReversalType, { button: "danger" | "primary"; modalIcon
   devolucion: { button: "primary", modalIcon: "bg-sys-orange-bg text-forest-medium" },
 };
 
-const digitsOf = (value: string) => value.replace(/\D/g, "");
-const maskTyped = (value: string, fallback: string) => {
-  const digits = digitsOf(value);
-  return digits.length >= 8 ? `${digits.slice(0, 4)} ****** ${digits.slice(-4)}` : fallback;
+const maskCard = (value: string) => {
+  const digits = value.replace(/\D/g, "");
+  return digits.length >= 8 ? `${digits.slice(0, 4)} ****** ${digits.slice(-4)}` : digits || "—";
 };
 
-export function ReversalForm({ type, configs, mockResult, successToast, errorToast, latency }: ReversalFormProps) {
+export function ReversalForm({ type, configs }: ReversalFormProps) {
   const config = configs[type];
   const tone = toneByType[type];
-  const [form, setForm] = useState({ ref: "", card: "" });
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<OperationResult | null>(null);
-  const { loading, run } = useSimulatedRequest(latency);
   const toast = useToast();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    getValues,
+    reset: resetForm,
+    formState: { errors },
+  } = useForm<ReversalValues>({
+    resolver: zodResolver(ReversalSchema),
+    defaultValues: { referenciaFinanciera: "", numeroTarjeta: "" },
+  });
+
   const closeModal = useCallback(() => setModalOpen(false), []);
+  const openConfirm = handleSubmit(() => setModalOpen(true));
 
-  const reference = digitsOf(form.ref) || mockResult.referencia;
-  const card = maskTyped(form.card, mockResult.tarjeta);
-
-  const confirm = () => {
+  const confirm = async () => {
     setModalOpen(false);
-    run(() => {
-      const now = new Date();
-      setResult({
-        title: `${config.label} aplicada`,
-        date: formatLongDateTime(now),
-        rows: [
-          { label: "No. de aprobación", value: mockResult.aprobacion },
-          { label: "Referencia financiera", value: reference },
-          { label: "Tarjeta", value: card },
-          { label: "Estatus", badge: "Aplicado" },
-          { label: "Fecha", value: formatDateTime(now) },
-        ],
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/transacciones/${type}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(getValues()),
       });
-      toast.show(successToast);
-    });
+      const data = await res.json();
+
+      if (res.ok && data.ok) {
+        const d = data.data;
+        setResult({
+          title: `${config.label} aplicada`,
+          date: formatDateTime(new Date(d.fecha)),
+          rows: [
+            { label: "No. de aprobación", value: d.numeroAprobacion },
+            { label: "Referencia financiera", value: d.referenciaFinanciera },
+            { label: "Tarjeta", value: d.tarjeta },
+            { label: "Estatus", badge: "Aplicado" },
+          ],
+        });
+        toast.show({
+          variant: "success",
+          title: `${config.label} aplicada`,
+          message: data.mensaje ?? "La operación se aplicó correctamente.",
+        });
+        return;
+      }
+
+      toast.show({
+        variant: "error",
+        title: "No se pudo completar",
+        message: data.mensaje ?? "No se encontró una venta con esa referencia.",
+      });
+    } catch {
+      toast.show({
+        variant: "error",
+        title: "Error de conexión",
+        message: "No pudimos conectar con el servidor. Inténtalo de nuevo.",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const reset = () => {
     setResult(null);
-    setForm({ ref: "", card: "" });
+    resetForm({ referenciaFinanciera: "", numeroTarjeta: "" });
   };
 
   return (
@@ -93,7 +121,7 @@ export function ReversalForm({ type, configs, mockResult, successToast, errorToa
             <h2 className="text-[1.1rem]">Datos de la operación original</h2>
             <p className="mt-0.5 text-[.8rem] text-muted-green">Usa los datos del comprobante de venta.</p>
           </div>
-          <form className="flex flex-col gap-5" onSubmit={(e) => e.preventDefault()} noValidate>
+          <form className="flex flex-col gap-5" onSubmit={openConfirm} noValidate>
             <Input
               id="rev-ref"
               label="Número de referencia financiera"
@@ -102,8 +130,8 @@ export function ReversalForm({ type, configs, mockResult, successToast, errorToa
               inputMode="numeric"
               numeric
               help="Lo encuentras en el comprobante de la venta."
-              value={form.ref}
-              onChange={(e) => setForm((f) => ({ ...f, ref: e.target.value }))}
+              error={errors.referenciaFinanciera?.message}
+              {...register("referenciaFinanciera")}
             />
             <Input
               id="rev-card"
@@ -112,24 +140,12 @@ export function ReversalForm({ type, configs, mockResult, successToast, errorToa
               placeholder="0000 0000 0000 0000"
               inputMode="numeric"
               numeric
-              value={form.card}
-              onChange={(e) => setForm((f) => ({ ...f, card: e.target.value }))}
+              error={errors.numeroTarjeta?.message}
+              {...register("numeroTarjeta")}
             />
-            <Button
-              variant={tone.button}
-              size="lg"
-              fullWidth
-              icon={config.icon}
-              loading={loading}
-              onClick={() => setModalOpen(true)}
-            >
+            <Button variant={tone.button} size="lg" fullWidth icon={config.icon} type="submit" loading={loading}>
               {config.buttonLabel}
             </Button>
-            <div className="flex justify-center">
-              <Button variant="light" size="sm" icon="bi-bug" onClick={() => toast.show(errorToast)}>
-                Simular error
-              </Button>
-            </div>
           </form>
         </Card>
 
@@ -178,11 +194,11 @@ export function ReversalForm({ type, configs, mockResult, successToast, errorToa
         <dl className="flex flex-col gap-2 rounded-lg bg-canvas px-4 py-[.85rem] text-[.85rem] tabular-nums">
           <div className="flex justify-between gap-4">
             <dt className="text-muted-green">Referencia</dt>
-            <dd className="font-bold">{reference}</dd>
+            <dd className="font-bold">{watch("referenciaFinanciera") || "—"}</dd>
           </div>
           <div className="flex justify-between gap-4">
             <dt className="text-muted-green">Tarjeta</dt>
-            <dd className="font-bold">{card}</dd>
+            <dd className="font-bold">{maskCard(watch("numeroTarjeta"))}</dd>
           </div>
         </dl>
       </Modal>

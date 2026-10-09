@@ -146,25 +146,10 @@ export const reversalConfigs: Record<ReversalType, ReversalConfig> = {
   },
 };
 
-export const MOCK_LATENCY_MS = 1200;
 export const TOAST_DURATION_MS = 4000;
 export const PAGE_SIZE = 10;
 
 export const mockCard = "1234 ****** 5678";
-
-export const saleResult = {
-  aprobacion: "482913",
-  referencia: "90817263",
-  tarjeta: mockCard,
-  titular: "Ana Sofía López",
-  importe: 1250,
-};
-
-export const reversalResult = {
-  aprobacion: "731045",
-  referencia: "90817263",
-  tarjeta: mockCard,
-};
 
 export const toastMessages = {
   saleSuccess: { variant: "success", title: "Venta aprobada", message: "La transacción se procesó correctamente." },
@@ -202,12 +187,3 @@ export const sampleCancelReceipt: { title: string; date: string; rows: ResultRow
     { label: "Fecha", value: "8 oct 2026, 15:05" },
   ],
 };
-
-export const transactionsSummary = (() => {
-  const total = transactions.reduce((sum, t) => sum + t.importe, 0);
-  return [
-    { label: "Transacciones", value: String(transactions.length), icon: "bi-receipt" },
-    { label: "Monto total", value: formatMoney(total), icon: "bi-cash-stack" },
-    { label: "Ticket promedio", value: formatMoney(total / transactions.length), icon: "bi-graph-up" },
-  ];
-})();
