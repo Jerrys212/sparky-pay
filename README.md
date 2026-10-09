@@ -90,6 +90,8 @@ pnpm dev          # http://localhost:3000 → redirige a /login
 
 El login también tiene botones de **acceso rápido** para cada rol.
 
+Los dos JWT que devuelve el mock se generaron en [jwtbuilder.jamiekurtz.com](http://jwtbuilder.jamiekurtz.com), con el claim `Role` en `Supervisor` y `Operador`. Están en `jwt-tokens.md`. El nombre que muestra la app sale de los claims `GivenName` y `Surname`.
+
 ### Tarjetas
 
 El número de tarjeta se valida con el **algoritmo de Luhn**, así que un número inventado normalmente se rechaza. Usa tarjetas de prueba:

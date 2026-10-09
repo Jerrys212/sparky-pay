@@ -17,7 +17,7 @@
       "responses": [
         {
           "uuid": "6d9bb710-1f3d-4b9f-af12-57275597512d",
-          "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Inicio de sesión exitoso\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTcGFyayBQYXkiLCJpYXQiOjE3OTA4MTI4MDAsImV4cCI6MTgyMjM0ODgwMCwiYXVkIjoid3d3LnNwYXJrcGF5LmNvbSIsInN1YiI6ImNhcmxvcy5yaXZlcmFAc3BhcmtwYXkuY29tIiwiR2l2ZW5OYW1lIjoiQ2FybG9zIiwiU3VybmFtZSI6IlJpdmVyYSIsIkVtYWlsIjoiY2FybG9zLnJpdmVyYUBzcGFya3BheS5jb20iLCJSb2xlIjoiU3VwZXJ2aXNvciIsInVzZXJuYW1lIjoic3VwZXJ2aXNvciJ9.jdaj1dRpoazCB9Qqymy1LyE8jmXFisMiwbC0mmk3yU0\",\n    \"usuario\": {\n      \"nombre\": \"Carlos Rivera\",\n      \"rol\": \"Supervisor\"\n    }\n  }\n}",
+          "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Inicio de sesión exitoso\",\n  \"data\": {\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3OTE0ODg5ODksImV4cCI6MTgyMzAyNTAwMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjoiU3VwZXJ2aXNvciJ9.J-keu5jI546ZTjjfPSc9mGNqtZgVip2jlbif5qZ13xU\",\n    \"usuario\": {\n      \"nombre\": \"Johnny Rocket\",\n      \"rol\": \"Supervisor\"\n    }\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "Supervisor",
@@ -51,7 +51,7 @@
         },
         {
           "uuid": "80431dfc-428b-40cc-a800-abe516d3000b",
-          "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Inicio de sesión exitoso\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTcGFyayBQYXkiLCJpYXQiOjE3OTA4MTI4MDAsImV4cCI6MTgyMjM0ODgwMCwiYXVkIjoid3d3LnNwYXJrcGF5LmNvbSIsInN1YiI6ImxhdXJhLm1lbmRlekBzcGFya3BheS5jb20iLCJHaXZlbk5hbWUiOiJMYXVyYSIsIlN1cm5hbWUiOiJNXHUwMGU5bmRleiIsIkVtYWlsIjoibGF1cmEubWVuZGV6QHNwYXJrcGF5LmNvbSIsIlJvbGUiOiJPcGVyYWRvciIsInVzZXJuYW1lIjoib3BlcmFkb3IifQ.7ho8TBDU4LvoLVtXZtWD2LtAhCgOWK45KiOOPNSYH88\",\n    \"usuario\": {\n      \"nombre\": \"Laura Méndez\",\n      \"rol\": \"Operador\"\n    }\n  }\n}",
+          "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Inicio de sesión exitoso\",\n  \"data\": {\n    \"token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE3OTE0ODg5ODksImV4cCI6MTgyMzAyNTAwMywiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IlRob21hcyIsIlN1cm5hbWUiOiJMb3ZlIiwiRW1haWwiOiJ0bG92ZUBleGFtcGxlLmNvbSIsIlJvbGUiOiJPcGVyYWRvciJ9.NDsVk_2VNmRkp_OMFMWbhJAGi_qeSSF_o_iI04C1jFs\",\n    \"usuario\": {\n      \"nombre\": \"Thomas Love\",\n      \"rol\": \"Operador\"\n    }\n  }\n}",
           "latency": 0,
           "statusCode": 200,
           "label": "Operador",
