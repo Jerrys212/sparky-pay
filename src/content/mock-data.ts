@@ -113,7 +113,6 @@ export const homeContent: Record<Role, HomeContent> = {
       { title: "Devolución", description: "Reembolsa total o parcialmente una venta.", href: "/supervisor/devolucion", icon: "bi-arrow-counterclockwise", tone: "orange" },
     ],
     listTitle: "Últimas operaciones",
-    listHref: "/supervisor/cancelacion",
   },
 };
 

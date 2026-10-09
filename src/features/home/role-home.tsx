@@ -38,13 +38,15 @@ export function RoleHome({ role, user, content, items }: RoleHomeProps) {
         <Card
           title={content.listTitle}
           action={
-            <Link
-              href={content.listHref}
-              className="inline-flex items-center gap-[.3rem] text-[.85rem] font-bold text-forest-medium hover:text-forest-light"
-            >
-              Ver todas
-              <i className="bi bi-chevron-right text-xs" aria-hidden="true" />
-            </Link>
+            content.listHref ? (
+              <Link
+                href={content.listHref}
+                className="inline-flex items-center gap-[.3rem] text-[.85rem] font-bold text-forest-medium hover:text-forest-light"
+              >
+                Ver todas
+                <i className="bi bi-chevron-right text-xs" aria-hidden="true" />
+              </Link>
+            ) : undefined
           }
         >
           <ul className="flex flex-col gap-3">

@@ -122,5 +122,5 @@ export interface HomeContent {
   stats: StatItem[];
   actions: ActionItem[];
   listTitle: string;
-  listHref: string;
+  listHref?: string;
 }
