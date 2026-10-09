@@ -9,8 +9,8 @@ export default function LoginPage() {
     <AuthShell>
       <LoginForm
         demoAccess={[
-          { role: "operador", href: "/operador" },
-          { role: "supervisor", href: "/supervisor" },
+          { role: "operador", username: "operador", password: "Operador123" },
+          { role: "supervisor", username: "supervisor", password: "Supervisor123" },
         ]}
       />
     </AuthShell>

@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import type { User } from "@/types";
 import { cn } from "@/lib/cn";
 import { Avatar } from "@/components/ui/avatar";
 import { RoleBadge } from "@/components/ui/badge";
 import { Dropdown } from "@/components/ui/dropdown";
 
-export function ProfileMenu({ user, logoutHref }: { user: User; logoutHref: string }) {
+export function ProfileMenu({ user }: { user: User }) {
   return (
     <Dropdown
       trigger={({ open, toggle, id }) => (
@@ -37,14 +36,16 @@ export function ProfileMenu({ user, logoutHref }: { user: User; logoutHref: stri
         <div className="text-xs text-muted-green">Sesión activa</div>
       </div>
       <div className="my-1 h-px bg-border-light" />
-      <Link
-        role="menuitem"
-        href={logoutHref}
-        className="flex items-center gap-[.6rem] rounded-md px-3 py-[.65rem] text-sm font-semibold text-sys-red-strong transition-colors duration-200 hover:bg-sys-red-bg hover:text-sys-red-strong"
-      >
-        <i className="bi bi-box-arrow-right" aria-hidden="true" />
-        Cerrar sesión
-      </Link>
+      <form action="/api/auth/logout" method="post">
+        <button
+          type="submit"
+          role="menuitem"
+          className="flex w-full items-center gap-[.6rem] rounded-md px-3 py-[.65rem] text-left text-sm font-semibold text-sys-red-strong transition-colors duration-200 hover:bg-sys-red-bg hover:text-sys-red-strong"
+        >
+          <i className="bi bi-box-arrow-right" aria-hidden="true" />
+          Cerrar sesión
+        </button>
+      </form>
     </Dropdown>
   );
 }

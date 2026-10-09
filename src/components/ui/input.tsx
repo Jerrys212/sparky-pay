@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react";
+import { useId, useState, type InputHTMLAttributes, type ReactNode, type Ref } from "react";
 import { cn } from "@/lib/cn";
 
 export type InputState = "default" | "focus" | "error";
@@ -53,6 +53,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   numeric?: boolean;
   tone?: "default" | "auth";
   fieldClassName?: string;
+  ref?: Ref<HTMLInputElement>;
 }
 
 export function Input({
@@ -70,6 +71,7 @@ export function Input({
   type = "text",
   className,
   fieldClassName,
+  ref,
   ...rest
 }: InputProps) {
   const generatedId = useId();
@@ -98,6 +100,7 @@ export function Input({
         )}
         <input
           id={inputId}
+          ref={ref}
           type={revealable ? (revealed ? "text" : "password") : type}
           aria-invalid={isError || undefined}
           className={cn(
