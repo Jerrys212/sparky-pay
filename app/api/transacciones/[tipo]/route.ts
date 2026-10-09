@@ -26,8 +26,15 @@ export async function PATCH(request: Request, { params }: { params: Promise<{ ti
   if (!VALID_TIPOS.has(tipo)) {
     return NextResponse.json({ ok: false, mensaje: "Operación no válida" }, { status: 404 });
   }
-  if (!(await getSessionRole())) {
+  const role = await getSessionRole();
+  if (!role) {
     return NextResponse.json({ ok: false, mensaje: "Sesión no válida" }, { status: 401 });
+  }
+  if (role !== "supervisor") {
+    return NextResponse.json(
+      { ok: false, mensaje: "Tu rol no tiene permiso para aplicar cancelaciones o devoluciones." },
+      { status: 403 },
+    );
   }
 
   const input = await request.json().catch(() => null);

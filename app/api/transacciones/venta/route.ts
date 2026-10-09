@@ -22,8 +22,12 @@ const VentaResponse = z.object({
 });
 
 export async function POST(request: Request) {
-  if (!(await getSessionRole())) {
+  const role = await getSessionRole();
+  if (!role) {
     return NextResponse.json({ ok: false, mensaje: "Sesión no válida" }, { status: 401 });
+  }
+  if (role !== "operador") {
+    return NextResponse.json({ ok: false, mensaje: "Tu rol no tiene permiso para realizar ventas." }, { status: 403 });
   }
 
   const input = await request.json().catch(() => null);
