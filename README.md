@@ -31,7 +31,7 @@ Credenciales de demo: `operador / Operador123` · `supervisor / Supervisor123` (
 ## Cómo funciona
 
 - **Proxy BFF**: el navegador solo habla con el propio Next (`app/api/*`), que reenvía al backend y guarda el JWT en una **cookie httpOnly**. El token nunca llega al cliente.
-- **`middleware.ts`** lee la cookie, decodifica el rol y protege las rutas (`/operador`, `/supervisor`), redirigiendo a `/login` o `/sin-acceso`.
+- **`proxy.ts`** lee la cookie, decodifica el rol y protege las rutas (`/operador`, `/supervisor`), redirigiendo a `/login` o `/sin-acceso`.
 - **Venta**: tarjeta, vencimiento y CVV se cifran con **AES-256** en el Route Handler (clave en env) antes de ir al backend (`POST`).
 - **Consultas** (`GET`), **cancelación** y **devolución** (`PATCH`) pasan por el mismo patrón.
 - **Validación con Zod** en el formulario (React Hook Form) y revalidada en el servidor.

@@ -76,7 +76,7 @@ spark-pay/
 │       └── auth.ts               # JWT decode, role, cookie helpers
 │
 ├── public/
-├── middleware.ts                 # Reads the auth cookie, guards routes by role
+├── proxy.ts                      # (ex-middleware, Next 16) reads the auth cookie, guards routes by role
 ├── next.config.ts
 └── package.json
 ```

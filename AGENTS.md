@@ -29,7 +29,7 @@ Endpoints (all JSON, response envelope `{ codigo, mensaje, data? }`):
 
 - **Every request shows a notification**: a success toast on `200`, a distinct error toast on `400`.
 - **Venta encrypts** `numeroTarjeta`, `fechaExpiracion` and `cvv` with **AES** before they leave for the backend. We encrypt server-side in the Route Handler (key from validated env), so the key never reaches the client.
-- Role drives navigation and route access (enforced in `middleware.ts`).
+- Role drives navigation and route access (enforced in `proxy.ts`).
 - UI/UX is weighted heavily in the evaluation.
 
 ## Environment
