@@ -7,27 +7,8 @@ import type {
   Role,
   SupervisorOperation,
   ToastInput,
-  Transaction,
-  User,
 } from "@/types";
 import { formatMoney } from "@/lib/format";
-
-export const users: Record<Role, User> = {
-  operador: {
-    name: "Laura Méndez",
-    firstName: "Laura",
-    initials: "LM",
-    role: "operador",
-    avatar: "/images/avatar.png",
-  },
-  supervisor: {
-    name: "Carlos Rivera",
-    firstName: "Carlos",
-    initials: "CR",
-    role: "supervisor",
-    avatar: "/images/avatar.png",
-  },
-};
 
 export const roleLabels: Record<Role, { label: string; icon: string; permissions: string }> = {
   operador: { label: "Operador", icon: "bi-person-badge", permissions: "Ventas y Consultas" },
@@ -57,30 +38,6 @@ export const navigation: Record<Role, NavSection[]> = {
     },
   ],
 };
-
-const tx = (
-  fecha: string,
-  aprobacion: string,
-  referencia: string,
-  titular: string,
-  tarjeta: string,
-  importe: number,
-): Transaction => ({ id: aprobacion, fecha, aprobacion, referencia, titular, tarjeta, importe, estatus: "Aprobada" });
-
-export const transactions: Transaction[] = [
-  tx("2026-10-08T14:32", "482913", "90817263", "Ana Sofía López", "4152******7781", 1250),
-  tx("2026-10-08T12:05", "481207", "90816544", "Jorge Hernández", "5579******2210", 85),
-  tx("2026-10-08T10:47", "480655", "90815902", "Mariana Torres", "4931******0458", 4200),
-  tx("2026-10-07T18:20", "479318", "90814377", "Luis Ramírez", "5204******9136", 640.5),
-  tx("2026-10-07T11:13", "478902", "90813820", "Valeria Gutiérrez", "4766******3302", 1899.9),
-  tx("2026-10-06T16:41", "477245", "90812195", "Diego Morales", "4152******6627", 320),
-  tx("2026-10-05T19:08", "476130", "90811463", "Fernanda Castillo", "5491******1874", 2150),
-  tx("2026-10-05T09:36", "475588", "90810729", "Ricardo Navarro", "4027******5590", 455),
-  tx("2026-10-04T13:54", "474011", "90809386", "Paola Jiménez", "5368******4021", 980.1),
-  tx("2026-10-03T17:22", "473496", "90808154", "Alejandro Ruiz", "4915******8843", 760),
-  tx("2026-10-02T15:10", "472870", "90807611", "Daniela Flores", "5512******3765", 1180),
-  tx("2026-10-01T10:02", "471334", "90806098", "Emilio Vargas", "4213******0912", 400),
-];
 
 export const supervisorOperations: SupervisorOperation[] = [
   { id: "731045", titular: "Mariana Torres", tipo: "Cancelación", aprobacion: "731045", tarjeta: "4931******0458", importe: 4200, hora: "13:12", estatus: "Aplicado" },

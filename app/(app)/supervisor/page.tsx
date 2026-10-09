@@ -1,11 +1,16 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { RoleHome } from "@/features/home/role-home";
 import { formatMaskedCard, formatMoney } from "@/lib/format";
-import { homeContent, supervisorOperations, users } from "@/content/mock-data";
+import { getSessionUser } from "@/lib/session";
+import { homeContent, supervisorOperations } from "@/content/mock-data";
 
 export const metadata: Metadata = { title: "Inicio" };
 
-export default function SupervisorHome() {
+export default async function SupervisorHome() {
+  const user = await getSessionUser();
+  if (!user) redirect("/login");
+
   const items = supervisorOperations.slice(0, 4).map((op) => ({
     id: op.id,
     icon: op.tipo === "Cancelación" ? "bi-x-circle" : "bi-arrow-counterclockwise",
@@ -17,5 +22,5 @@ export default function SupervisorHome() {
     statusBadge: op.estatus,
   }));
 
-  return <RoleHome role="supervisor" user={users.supervisor} content={homeContent.supervisor} items={items} />;
+  return <RoleHome role="supervisor" user={user} content={homeContent.supervisor} items={items} />;
 }
