@@ -5,7 +5,7 @@ import { RequestToast } from "@/components/ui/request-toast";
 import { TransactionsTable } from "@/features/consultas/transactions-table";
 import { getTransactions } from "@/features/consultas/get-transactions";
 import { formatMoney } from "@/lib/format";
-import { PAGE_SIZE } from "@/content/mock-data";
+import { PAGE_SIZE, toastMessages } from "@/content/copy";
 
 export const metadata: Metadata = { title: "Consultas" };
 
@@ -21,15 +21,7 @@ export default async function ConsultasPage() {
 
   return (
     <>
-      <RequestToast
-        variant={ok ? "success" : "error"}
-        title={ok ? "Consulta exitosa" : "No se pudo consultar"}
-        message={
-          ok
-            ? `Se cargaron ${total} transacciones aprobadas.`
-            : "No pudimos obtener las transacciones. Inténtalo de nuevo."
-        }
-      />
+      <RequestToast {...(ok ? toastMessages.transactionsSuccess(total) : toastMessages.transactionsError)} />
       <PageHeader
         title="Consultas"
         subtitle="Transacciones aprobadas de la terminal."

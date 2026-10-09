@@ -23,17 +23,6 @@ export interface Transaction {
   estatus: TransactionStatus;
 }
 
-export interface SupervisorOperation {
-  id: string;
-  titular: string;
-  tipo: Exclude<OperationType, "Venta">;
-  aprobacion: string;
-  tarjeta: string;
-  importe: number;
-  hora: string;
-  estatus: TransactionStatus;
-}
-
 export interface ResultRow {
   label: string;
   value?: string;
@@ -119,8 +108,8 @@ export interface TransactionRow {
 
 export interface HomeContent {
   permissions: string;
-  stats: StatItem[];
   actions: ActionItem[];
   listTitle: string;
   listHref?: string;
+  listEmpty: { title: string; description: string };
 }

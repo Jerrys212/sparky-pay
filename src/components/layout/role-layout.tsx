@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { redirect } from "next/navigation";
 import type { Role } from "@/types";
-import { navigation } from "@/content/mock-data";
+import { navigation } from "@/content/copy";
 import { getSessionUser } from "@/lib/session";
 import { AppShell } from "@/components/layout/app-shell";
 

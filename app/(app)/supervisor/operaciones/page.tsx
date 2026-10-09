@@ -1,25 +1,18 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
+import { RequestToast } from "@/components/ui/request-toast";
 import { OperationsTable } from "@/features/supervisor/operations-table";
-import { formatMaskedCard, formatMoney } from "@/lib/format";
-import { supervisorOperations } from "@/content/mock-data";
+import { getOperations } from "@/features/supervisor/get-operations";
+import { toastMessages } from "@/content/copy";
 
 export const metadata: Metadata = { title: "Operaciones" };
 
-export default function OperacionesPage() {
-  const rows = supervisorOperations.map((op) => ({
-    id: op.id,
-    tipo: op.tipo,
-    titular: op.titular,
-    aprobacion: op.aprobacion,
-    card: formatMaskedCard(op.tarjeta),
-    amount: formatMoney(op.importe),
-    hora: op.hora,
-    estatus: op.estatus,
-  }));
+export default async function OperacionesPage() {
+  const { ok, rows, total } = await getOperations();
 
   return (
     <>
+      <RequestToast {...(ok ? toastMessages.operationsSuccess(total) : toastMessages.operationsError)} />
       <PageHeader
         title="Operaciones"
         subtitle="Cancelaciones y devoluciones aplicadas."

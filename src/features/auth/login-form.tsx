@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { Role } from "@/types";
-import { roleLabels } from "@/content/mock-data";
+import { roleLabels } from "@/content/copy";
 import { cn } from "@/lib/cn";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";

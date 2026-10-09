@@ -3,7 +3,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { ToastInput, ToastVariant } from "@/types";
 import { cn } from "@/lib/cn";
-import { TOAST_DURATION_MS } from "@/content/mock-data";
+import { TOAST_DURATION_MS } from "@/content/copy";
 
 const variantStyles: Record<ToastVariant, { border: string; iconBox: string; chip: string; bar: string; icon: string; code: string }> = {
   success: {

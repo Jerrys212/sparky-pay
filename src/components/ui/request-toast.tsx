@@ -4,7 +4,11 @@ import { useEffect, useRef } from "react";
 import type { ToastInput } from "@/types";
 import { useToast } from "@/components/ui/toast";
 
-export function RequestToast({ variant, title, message }: ToastInput) {
+interface RequestToastProps extends ToastInput {
+  clearQuery?: boolean;
+}
+
+export function RequestToast({ variant, title, message, clearQuery }: RequestToastProps) {
   const shown = useRef(false);
   const { show } = useToast();
 
@@ -12,7 +16,8 @@ export function RequestToast({ variant, title, message }: ToastInput) {
     if (shown.current) return;
     shown.current = true;
     show({ variant, title, message });
-  }, [show, variant, title, message]);
+    if (clearQuery) window.history.replaceState(null, "", window.location.pathname);
+  }, [show, variant, title, message, clearQuery]);
 
   return null;
 }

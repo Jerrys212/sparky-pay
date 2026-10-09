@@ -11,7 +11,7 @@ import { ResultCard } from "@/components/ui/result-card";
 import { TableSkeleton } from "@/components/ui/table-skeleton";
 import { Toast } from "@/components/ui/toast";
 import { ToastDemoButtons } from "@/components/ui/toast-demo-buttons";
-import { sampleCancelReceipt, sampleSaleReceipt, toastMessages } from "@/content/mock-data";
+import { sampleCancelReceipt, sampleSaleReceipt, toastMessages } from "@/content/copy";
 
 export const metadata: Metadata = { title: "Sistema visual" };
 

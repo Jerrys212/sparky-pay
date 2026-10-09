@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/layout/page-header";
 import { ReversalForm } from "@/features/reversal/reversal-form";
-import { reversalConfigs } from "@/content/mock-data";
+import { reversalConfigs } from "@/content/copy";
 
 export const metadata: Metadata = { title: "Devolución" };
 

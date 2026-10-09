@@ -10,11 +10,12 @@ export interface OperationRow {
   aprobacion: string;
   card: string;
   amount: string;
+  day: string;
   hora: string;
   estatus: BadgeVariant;
 }
 
-const columns = "grid-cols-[150px_minmax(160px,1fr)_140px_190px_130px_110px_130px]";
+const columns = "grid-cols-[150px_minmax(160px,1fr)_140px_190px_130px_170px_130px]";
 const cell = "px-5 py-4";
 
 export function OperationsTable({ rows }: { rows: OperationRow[] }) {
@@ -25,13 +26,13 @@ export function OperationsTable({ rows }: { rows: OperationRow[] }) {
       ) : (
         <>
           <div className="hidden overflow-x-auto md:block">
-            <div role="table" aria-label="Operaciones aplicadas" className="min-w-[920px]">
+            <div role="table" aria-label="Operaciones aplicadas" className="min-w-[980px]">
               <div role="rowgroup">
                 <div
                   role="row"
                   className={cn("grid border-b border-text-main/5 bg-surface-soft text-xs font-bold tracking-[.05em] text-muted-green uppercase", columns)}
                 >
-                  {["Tipo", "Titular", "No. aprobación", "Tarjeta", "Importe", "Hora", "Estatus"].map((h) => (
+                  {["Tipo", "Titular", "No. aprobación", "Tarjeta", "Importe", "Fecha", "Estatus"].map((h) => (
                     <div key={h} role="columnheader" className={cn(cell, h === "Importe" && "text-right")}>
                       {h}
                     </div>
@@ -65,7 +66,7 @@ export function OperationsTable({ rows }: { rows: OperationRow[] }) {
                       {r.amount}
                     </div>
                     <div role="cell" className={cn(cell, "text-muted-green tabular-nums")}>
-                      {r.hora}
+                      {r.day} · {r.hora}
                     </div>
                     <div role="cell" className={cell}>
                       <Badge variant={r.estatus} />
@@ -87,7 +88,9 @@ export function OperationsTable({ rows }: { rows: OperationRow[] }) {
                   <span>
                     Aprob. <strong className="font-mono text-text-main">{r.aprobacion}</strong>
                   </span>
-                  <span>{r.hora}</span>
+                  <span>
+                    {r.day} · {r.hora}
+                  </span>
                   <span className="flex items-center gap-[.35rem]">
                     <i className="bi bi-credit-card-2-front" aria-hidden="true" />
                     {r.card}

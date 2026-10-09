@@ -14,6 +14,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: { default: "Spark Pay", template: "%s · Spark Pay" },
   description: "Terminal de pagos web Spark Pay.",
+  robots: { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

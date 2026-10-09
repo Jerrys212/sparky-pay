@@ -61,8 +61,8 @@ spark-pay/
 │   │   ├── ui/                   # Own primitives (Button, Badge, Input, Toast…)
 │   │   └── layout/               # AppShell, Navbar, Sidebar, Footer, PageHeader
 │   │
-│   ├── content/                  # Copy & data: nav, role labels, toast messages…
-│   │   └── mock-data.ts
+│   ├── content/                  # UI copy: nav, role labels, toast messages…
+│   │   └── copy.ts
 │   │
 │   ├── actions/                  # Server Actions ("use server"), with their Zod schema
 │   │

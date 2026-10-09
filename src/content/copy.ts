@@ -5,7 +5,7 @@ import type {
   ReversalConfig,
   ReversalType,
   Role,
-  SupervisorOperation,
+  StatItem,
   ToastInput,
 } from "@/types";
 import { formatMoney } from "@/lib/format";
@@ -39,47 +39,39 @@ export const navigation: Record<Role, NavSection[]> = {
   ],
 };
 
-export const supervisorOperations: SupervisorOperation[] = [
-  { id: "731045", titular: "Mariana Torres", tipo: "Cancelación", aprobacion: "731045", tarjeta: "4931******0458", importe: 4200, hora: "13:12", estatus: "Aplicado" },
-  { id: "730912", titular: "Luis Ramírez", tipo: "Devolución", aprobacion: "730912", tarjeta: "5204******9136", importe: 320, hora: "12:40", estatus: "Aplicado" },
-  { id: "730587", titular: "Diego Morales", tipo: "Devolución", aprobacion: "730587", tarjeta: "4152******6627", importe: 160, hora: "11:05", estatus: "Aplicado" },
-  { id: "730233", titular: "Jorge Hernández", tipo: "Cancelación", aprobacion: "730233", tarjeta: "5579******2210", importe: 85, hora: "09:48", estatus: "Aplicado" },
-  { id: "729988", titular: "Valeria Gutiérrez", tipo: "Devolución", aprobacion: "729988", tarjeta: "4766******3302", importe: 950, hora: "09:15", estatus: "Aplicado" },
-  { id: "729640", titular: "Ricardo Navarro", tipo: "Cancelación", aprobacion: "729640", tarjeta: "4027******5590", importe: 455, hora: "08:52", estatus: "Aplicado" },
-  { id: "729301", titular: "Paola Jiménez", tipo: "Devolución", aprobacion: "729301", tarjeta: "5368******4021", importe: 230, hora: "08:30", estatus: "Aplicado" },
-  { id: "728975", titular: "Alejandro Ruiz", tipo: "Cancelación", aprobacion: "728975", tarjeta: "4915******8843", importe: 760, hora: "08:05", estatus: "Aplicado" },
-  { id: "728612", titular: "Daniela Flores", tipo: "Devolución", aprobacion: "728612", tarjeta: "5512******3765", importe: 540, hora: "07:48", estatus: "Aplicado" },
-  { id: "728244", titular: "Emilio Vargas", tipo: "Cancelación", aprobacion: "728244", tarjeta: "4213******0912", importe: 400, hora: "07:20", estatus: "Aplicado" },
-];
-
 export const homeContent: Record<Role, HomeContent> = {
   operador: {
     permissions: roleLabels.operador.permissions,
-    stats: [
-      { label: "Ventas de hoy", icon: "bi-bag-check", value: "12", note: "+3 respecto a ayer", trend: "up" },
-      { label: "Monto aprobado hoy", icon: "bi-cash-stack", value: "$8,450.00", suffix: "MXN", note: "Corte en curso" },
-    ],
     actions: [
       { title: "Nueva venta", description: "Cobra con tarjeta de forma segura.", href: "/operador/venta", icon: "bi-cart-plus", tone: "lime" },
       { title: "Consultas", description: "Revisa las transacciones aprobadas.", href: "/operador/consultas", icon: "bi-receipt", tone: "lime" },
     ],
     listTitle: "Últimas transacciones",
     listHref: "/operador/consultas",
+    listEmpty: { title: "Sin transacciones", description: "No pudimos cargar las transacciones o aún no hay ninguna aprobada." },
   },
   supervisor: {
     permissions: roleLabels.supervisor.permissions,
-    stats: [
-      { label: "Cancelaciones hoy", icon: "bi-x-circle", value: "3", note: "Todas aplicadas" },
-      { label: "Devoluciones hoy", icon: "bi-arrow-counterclockwise", value: "5", note: "+2 respecto a ayer", trend: "up" },
-    ],
     actions: [
       { title: "Cancelación", description: "Anula una venta del mismo día.", href: "/supervisor/cancelacion", icon: "bi-x-circle", tone: "red" },
       { title: "Devolución", description: "Reembolsa total o parcialmente una venta.", href: "/supervisor/devolucion", icon: "bi-arrow-counterclockwise", tone: "orange" },
     ],
     listTitle: "Últimas operaciones",
     listHref: "/supervisor/operaciones",
+    listEmpty: { title: "Sin operaciones", description: "No pudimos cargar las operaciones o aún no hay ninguna aplicada." },
   },
 };
+
+export const homeStats = {
+  operador: {
+    count: { label: "Transacciones aprobadas", icon: "bi-bag-check", note: "Según la última consulta" },
+    amount: { label: "Monto aprobado", icon: "bi-cash-stack", suffix: "MXN", note: "Suma de las transacciones aprobadas" },
+  },
+  supervisor: {
+    cancelaciones: { label: "Cancelaciones", icon: "bi-x-circle", note: "Aplicadas" },
+    devoluciones: { label: "Devoluciones", icon: "bi-arrow-counterclockwise", note: "Aplicadas" },
+  },
+} satisfies Record<Role, Record<string, Omit<StatItem, "value">>>;
 
 export const reversalConfigs: Record<ReversalType, ReversalConfig> = {
   cancelacion: {
@@ -125,7 +117,28 @@ export const toastMessages = {
   }),
   reversalError: { variant: "error", title: "No se pudo completar", message: "No se encontró una venta con esa referencia." },
   genericSuccess: { variant: "success", title: "Operación exitosa", message: "La transacción se procesó correctamente." },
-} satisfies Record<string, ToastInput | ((label: string) => ToastInput)>;
+  transactionsSuccess: (total: number): ToastInput => ({
+    variant: "success",
+    title: "Consulta exitosa",
+    message: `Se cargaron ${total} transacciones aprobadas.`,
+  }),
+  transactionsError: {
+    variant: "error",
+    title: "No se pudo consultar",
+    message: "No pudimos obtener las transacciones. Inténtalo de nuevo.",
+  },
+  operationsSuccess: (total: number): ToastInput => ({
+    variant: "success",
+    title: "Consulta exitosa",
+    message: `Se cargaron ${total} operaciones aplicadas.`,
+  }),
+  operationsError: {
+    variant: "error",
+    title: "No se pudo consultar",
+    message: "No pudimos obtener las operaciones. Inténtalo de nuevo.",
+  },
+  logoutSuccess: { variant: "success", title: "Sesión cerrada", message: "Cerraste sesión correctamente." },
+} satisfies Record<string, ToastInput | ((...args: never[]) => ToastInput)>;
 
 export const sampleSaleReceipt: { title: string; date: string; rows: ResultRow[] } = {
   title: "Venta aprobada",

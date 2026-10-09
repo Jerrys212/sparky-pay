@@ -239,6 +239,37 @@
       "streamingInterval": 0
     },
     {
+      "uuid": "0971250d-00ab-4aa0-8937-f63c58fcbae1",
+      "type": "http",
+      "documentation": "Consulta de cancelaciones y devoluciones aplicadas (10 registros).",
+      "method": "get",
+      "endpoint": "transacciones/reversos",
+      "responses": [
+        {
+          "uuid": "59bafacd-f96d-4d07-b2ac-44c41cea8c3f",
+          "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Consulta exitosa\",\n  \"total\": 10,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"numeroAprobacion\": \"731045\",\n      \"referenciaFinanciera\": \"48120934\",\n      \"tarjeta\": \"4931*****0458\",\n      \"nombreTitular\": \"Mariana Torres\",\n      \"importe\": 4200,\n      \"tipo\": \"Cancelación\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-08T13:12:00\"\n    },\n    {\n      \"id\": 2,\n      \"numeroAprobacion\": \"730912\",\n      \"referenciaFinanciera\": \"22633920\",\n      \"tarjeta\": \"5204*****9136\",\n      \"nombreTitular\": \"Luis Ramírez\",\n      \"importe\": 320,\n      \"tipo\": \"Devolución\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-08T12:40:00\"\n    },\n    {\n      \"id\": 3,\n      \"numeroAprobacion\": \"730587\",\n      \"referenciaFinanciera\": \"61834402\",\n      \"tarjeta\": \"4152*****6627\",\n      \"nombreTitular\": \"Diego Morales\",\n      \"importe\": 160,\n      \"tipo\": \"Devolución\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-08T11:05:00\"\n    },\n    {\n      \"id\": 4,\n      \"numeroAprobacion\": \"730233\",\n      \"referenciaFinanciera\": \"30246633\",\n      \"tarjeta\": \"5579*****2210\",\n      \"nombreTitular\": \"Jorge Hernández\",\n      \"importe\": 85,\n      \"tipo\": \"Cancelación\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-08T09:48:00\"\n    },\n    {\n      \"id\": 5,\n      \"numeroAprobacion\": \"729988\",\n      \"referenciaFinanciera\": \"73390215\",\n      \"tarjeta\": \"4766*****3302\",\n      \"nombreTitular\": \"Valeria Gutiérrez\",\n      \"importe\": 950,\n      \"tipo\": \"Devolución\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-08T09:15:00\"\n    },\n    {\n      \"id\": 6,\n      \"numeroAprobacion\": \"729640\",\n      \"referenciaFinanciera\": \"15570386\",\n      \"tarjeta\": \"4027*****5590\",\n      \"nombreTitular\": \"Ricardo Navarro\",\n      \"importe\": 455,\n      \"tipo\": \"Cancelación\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-07T18:52:00\"\n    },\n    {\n      \"id\": 7,\n      \"numeroAprobacion\": \"729301\",\n      \"referenciaFinanciera\": \"90473318\",\n      \"tarjeta\": \"5368*****4021\",\n      \"nombreTitular\": \"Paola Jiménez\",\n      \"importe\": 230,\n      \"tipo\": \"Devolución\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-07T16:30:00\"\n    },\n    {\n      \"id\": 8,\n      \"numeroAprobacion\": \"728975\",\n      \"referenciaFinanciera\": \"27765041\",\n      \"tarjeta\": \"4915*****8843\",\n      \"nombreTitular\": \"Alejandro Ruiz\",\n      \"importe\": 760,\n      \"tipo\": \"Cancelación\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-07T13:05:00\"\n    },\n    {\n      \"id\": 9,\n      \"numeroAprobacion\": \"728612\",\n      \"referenciaFinanciera\": \"84012967\",\n      \"tarjeta\": \"5512*****3765\",\n      \"nombreTitular\": \"Daniela Flores\",\n      \"importe\": 540,\n      \"tipo\": \"Devolución\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-07T11:48:00\"\n    },\n    {\n      \"id\": 10,\n      \"numeroAprobacion\": \"728244\",\n      \"referenciaFinanciera\": \"56328870\",\n      \"tarjeta\": \"4213*****0912\",\n      \"nombreTitular\": \"Emilio Vargas\",\n      \"importe\": 400,\n      \"tipo\": \"Cancelación\",\n      \"estatus\": \"Aplicado\",\n      \"fecha\": \"2026-10-07T10:20:00\"\n    }\n  ]\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Reversos aplicados",
+          "headers": [],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
       "uuid": "6c12491e-8a7c-45da-8062-05f1bcd12fa7",
       "type": "http",
       "documentation": "Cancelación. Referencia financiera de 8 dígitos y número de tarjeta.",
@@ -381,6 +412,10 @@
     {
       "type": "route",
       "uuid": "651ae7ad-9c40-46a3-80aa-c36ad17d6f5b"
+    },
+    {
+      "type": "route",
+      "uuid": "0971250d-00ab-4aa0-8937-f63c58fcbae1"
     },
     {
       "type": "route",

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import type { HomeContent, Role, TransactionListItem, User } from "@/types";
+import type { HomeContent, Role, StatItem, TransactionListItem, User } from "@/types";
 import { ActionCard } from "@/features/home/action-card";
 import { Card } from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
 import { PageHeader } from "@/components/layout/page-header";
 import { RoleCard } from "@/features/home/role-card";
 import { StatCard } from "@/components/ui/stat-card";
@@ -12,10 +13,11 @@ interface RoleHomeProps {
   role: Role;
   user: User;
   content: HomeContent;
+  stats: StatItem[];
   items: TransactionListItem[];
 }
 
-export function RoleHome({ role, user, content, items }: RoleHomeProps) {
+export function RoleHome({ role, user, content, stats, items }: RoleHomeProps) {
   return (
     <>
       <PageHeader
@@ -26,7 +28,7 @@ export function RoleHome({ role, user, content, items }: RoleHomeProps) {
       <div className="flex flex-col gap-6">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           <RoleCard role={role} permissions={content.permissions} />
-          {content.stats.map((stat) => (
+          {stats.map((stat) => (
             <StatCard key={stat.label} {...stat} />
           ))}
         </div>
@@ -49,11 +51,15 @@ export function RoleHome({ role, user, content, items }: RoleHomeProps) {
             ) : undefined
           }
         >
-          <ul className="flex flex-col gap-3">
-            {items.map((item) => (
-              <TransactionItem key={item.id} {...item} />
-            ))}
-          </ul>
+          {items.length === 0 ? (
+            <EmptyState {...content.listEmpty} />
+          ) : (
+            <ul className="flex flex-col gap-3">
+              {items.map((item) => (
+                <TransactionItem key={item.id} {...item} />
+              ))}
+            </ul>
+          )}
         </Card>
       </div>
     </>
