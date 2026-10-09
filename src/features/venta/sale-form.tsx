@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { OperationResult } from "@/types";
 import { formatDateTime, formatMoney } from "@/lib/format";
+import { encryptCard } from "@/lib/transport-client";
 import { digitsOnly, formatAmount, formatCardNumber, formatExpiry, formatHolderName } from "@/lib/input-format";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -33,12 +34,24 @@ export function SaleForm() {
 
   const amount = Number(watch("importe")) || 0;
 
-  const submit = handleSubmit(async (values) => {
+  const submit = handleSubmit(async ({ importe, nombreTitular, numeroTarjeta, fechaExpiracion, cvv }) => {
+    let card;
+    try {
+      card = await encryptCard({ numeroTarjeta, fechaExpiracion, cvv });
+    } catch {
+      toast.show({
+        variant: "error",
+        title: "No se pudo cifrar",
+        message: "No pudimos proteger los datos de la tarjeta. Inténtalo de nuevo.",
+      });
+      return;
+    }
+
     try {
       const res = await fetch("/api/transacciones/venta", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({ importe, nombreTitular, ...card }),
       });
       const data = await res.json();
 

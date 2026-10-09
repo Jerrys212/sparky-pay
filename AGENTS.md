@@ -28,7 +28,7 @@ Endpoints (all JSON, response envelope `{ codigo, mensaje, data? }`):
 ## Hard requirements from the test
 
 - **Every request shows a notification**: a success toast on `200`, a distinct error toast on `400`.
-- **Venta encrypts** `numeroTarjeta`, `fechaExpiracion` and `cvv` with **AES** before they leave for the backend. We encrypt server-side in the Route Handler (key from validated env), so the key never reaches the client.
+- **Venta encrypts** `numeroTarjeta`, `fechaExpiracion` and `cvv` with **AES** before they leave for the backend. The browser encrypts them with AES-256-GCM using a key agreed via ECDH P-256 + HKDF against the BFF's public key (`/api/cifrado/llave`), so no secret ships to the client; the Route Handler decrypts, re-validates with Zod and re-encrypts with AES-256-CBC (`AES_SECRET_KEY`) for the backend.
 - Role drives navigation and route access (enforced in `proxy.ts`).
 - UI/UX is weighted heavily in the evaluation.
 

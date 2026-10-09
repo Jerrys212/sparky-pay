@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { backendFetch } from "@/lib/api";
-import { aesEncrypt } from "@/lib/crypto";
+import { aesEncrypt, createTransportDecrypter } from "@/lib/crypto";
 import { getSessionRole } from "@/lib/session";
+import { EncryptedCardSchema } from "@/lib/transport";
 import { VentaSchema } from "@/features/venta/schema";
+
+const VentaRequest = EncryptedCardSchema.extend({ importe: z.string(), nombreTitular: z.string() });
 
 const VentaResponse = z.object({
   codigo: z.number(),
@@ -30,7 +33,25 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, mensaje: "Tu rol no tiene permiso para realizar ventas." }, { status: 403 });
   }
 
-  const input = await request.json().catch(() => null);
+  const envelope = VentaRequest.safeParse(await request.json().catch(() => null));
+  if (!envelope.success) {
+    return NextResponse.json({ ok: false, mensaje: "Los datos de la tarjeta deben enviarse cifrados." }, { status: 400 });
+  }
+
+  let input;
+  try {
+    const decrypt = createTransportDecrypter(envelope.data.llavePublica);
+    input = {
+      importe: envelope.data.importe,
+      nombreTitular: envelope.data.nombreTitular,
+      numeroTarjeta: decrypt(envelope.data.numeroTarjeta),
+      fechaExpiracion: decrypt(envelope.data.fechaExpiracion),
+      cvv: decrypt(envelope.data.cvv),
+    };
+  } catch {
+    return NextResponse.json({ ok: false, mensaje: "No pudimos descifrar los datos de la tarjeta." }, { status: 400 });
+  }
+
   const parsed = VentaSchema.safeParse(input);
   if (!parsed.success) {
     return NextResponse.json({ ok: false, errors: parsed.error.flatten().fieldErrors }, { status: 400 });

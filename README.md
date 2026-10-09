@@ -50,7 +50,7 @@ cp .env.example .env.local
 | Variable | Descripción |
 | --- | --- |
 | `BACKEND_URL` | URL base del mock, con prefijo. Por defecto `http://localhost:3001/api`. |
-| `AES_SECRET_KEY` | Clave AES-256 en hexadecimal (64 caracteres = 32 bytes). |
+| `AES_SECRET_KEY` | Clave AES-256 en hexadecimal (64 caracteres = 32 bytes). De ella también se deriva la llave ECDH del servidor para el cifrado en el navegador. |
 
 Genera una clave propia:
 
@@ -138,7 +138,12 @@ Cada caso indica qué requisito de la evaluación cubre.
 | 2.6 | Titular de una sola palabra o con números | Error de nombre y apellido; los números no se escriben. |
 | 2.7 | Importe `0` | "Ingresa un importe mayor a 0". |
 
-**Cifrado AES.** El Route Handler de venta cifra `numeroTarjeta`, `fechaExpiracion` y `cvv` con **AES-256-CBC** (IV aleatorio por campo, formato `iv:ciphertext` en base64) antes de enviarlos al backend. Para verlo, abre la pestaña **Logs** de Mockoon y selecciona la petición `POST /api/transacciones/venta`: en el body esos tres campos llegan cifrados y no en claro.
+**Cifrado AES.** `numeroTarjeta`, `fechaExpiracion` y `cvv` van cifrados en los dos tramos:
+
+1. **Navegador → BFF: AES-256-GCM.** Antes de enviar, el navegador pide la llave pública del servidor (`GET /api/cifrado/llave`) y genera un par de llaves ECDH P-256 efímero. Con las dos llaves deriva una clave AES compartida (HKDF-SHA256) y cifra cada campo con Web Crypto. No hay ninguna clave secreta en el código del cliente. Para verlo, abre DevTools → **Network** y revisa la petición `venta`: esos tres campos van como `iv:ciphertext` en base64, junto con la `llavePublica` efímera.
+2. **BFF → backend: AES-256-CBC.** El Route Handler descifra, revalida con el mismo schema de Zod y vuelve a cifrar con `AES_SECRET_KEY` (IV aleatorio por campo). Para verlo, abre la pestaña **Logs** de Mockoon y revisa el body de `POST /api/transacciones/venta`.
+
+Si el BFF recibe la tarjeta en texto plano o un dato cifrado alterado, responde 400.
 
 ### 3. Consultas (Operador, `GET`)
 
@@ -168,7 +173,7 @@ curl -c op.txt  -H "Content-Type: application/json" -X POST http://localhost:300
 curl -c sup.txt -H "Content-Type: application/json" -X POST http://localhost:3000/api/auth/login \
   -d '{"username":"supervisor","password":"Supervisor123"}'
 
-# 400: datos inválidos (revalidados en el servidor con el mismo schema de Zod)
+# 400: tarjeta en texto plano (el BFF exige los datos cifrados desde el navegador)
 curl -b op.txt -H "Content-Type: application/json" -X POST http://localhost:3000/api/transacciones/venta \
   -d '{"importe":"1e5","nombreTitular":"A","numeroTarjeta":"123","fechaExpiracion":"13/99","cvv":"1"}'
 
@@ -193,12 +198,13 @@ curl -H "Content-Type: application/json" -X POST http://localhost:3000/api/trans
 ```
 Navegador ──JSON──▶ Next.js (BFF: app/api/*) ──JSON──▶ Mockoon :3001/api
                     · valida con Zod
-                    · cifra con AES (venta)
+                    · descifra AES-GCM del navegador y
+                      cifra con AES-CBC hacia el mock (venta)
                     · guarda el JWT en cookie httpOnly
                     · verifica el rol
 ```
 
-- **BFF.** El navegador solo habla con el propio Next. Los Route Handlers de `app/api/*` reenvían al mock, así que el JWT y la clave AES nunca llegan al cliente.
+- **BFF.** El navegador solo habla con el propio Next. Los Route Handlers de `app/api/*` reenvían al mock, así que el JWT y la clave AES nunca llegan al cliente. Los datos de tarjeta salen del navegador ya cifrados (ECDH + AES-GCM).
 - **Sesión.** El JWT se guarda en una cookie `httpOnly` y `SameSite=Lax`. `proxy.ts` (el antiguo middleware en Next 16) lee el rol y protege `/operador` y `/supervisor`. Los Route Handlers vuelven a verificar el rol y responden **403** si no corresponde.
 - **Validación.** Un solo schema de Zod por formulario. El cliente lo usa con React Hook Form y el servidor lo revalida. Los mensajes están en español.
 - **Notificaciones.** Cada petición muestra un toast: verde con chip `200 OK` en caso de éxito, rojo con chip `400 Bad Request` en caso de error.
@@ -238,7 +244,7 @@ src/features/           Un folder por flujo: auth, venta, consultas, reversal, s
 src/components/ui/      Primitivas propias (Button, Input, Toast, Modal…)
 src/components/layout/  Shell, navbar, sidebar, page header
 src/content/copy.ts     Textos de la UI (navegación, toasts, etiquetas)
-src/lib/                env, api, auth, session, crypto (AES), card (Luhn), input-format, zod
+src/lib/                env, api, auth, session, crypto (AES/ECDH), transport (cifrado en el navegador), card (Luhn), input-format, zod
 proxy.ts                Protección de rutas por rol
 spark-pay-api.json      Environment de Mockoon
 ```
