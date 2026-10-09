@@ -1,2 +1,6 @@
 minimumReleaseAgeExclude:
   - bootstrap-icons@1.13.2
+onlyBuiltDependencies:
+  - unrs-resolver
+  - "@tailwindcss/oxide"
+  - sharp
