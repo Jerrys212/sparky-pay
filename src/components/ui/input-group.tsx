@@ -2,7 +2,7 @@
 
 import { useId, type InputHTMLAttributes, type ReactNode, type Ref } from "react";
 import { cn } from "@/lib/cn";
-import { Field } from "@/components/ui/input";
+import { Field, withFormat } from "@/components/ui/input";
 
 interface InputGroupProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "prefix"> {
   label?: ReactNode;
@@ -11,10 +11,11 @@ interface InputGroupProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "s
   prefix?: ReactNode;
   suffix?: ReactNode;
   size?: "md" | "lg";
+  format?: (value: string) => string;
   ref?: Ref<HTMLInputElement>;
 }
 
-export function InputGroup({ id, label, help, error, prefix, suffix, size = "md", className, ref, ...rest }: InputGroupProps) {
+export function InputGroup({ id, label, help, error, prefix, suffix, size = "md", format, onChange, className, ref, ...rest }: InputGroupProps) {
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const isError = Boolean(error);
@@ -45,6 +46,7 @@ export function InputGroup({ id, label, help, error, prefix, suffix, size = "md"
             className,
           )}
           {...rest}
+          onChange={withFormat(format, onChange)}
         />
         {suffix && <span className={cn(addon, "border-l border-text-main/8 text-[.8rem]")}>{suffix}</span>}
       </div>

@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { OperationResult } from "@/types";
 import { formatDateTime, formatMoney } from "@/lib/format";
+import { digitsOnly, formatAmount, formatCardNumber, formatExpiry, formatHolderName } from "@/lib/input-format";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -12,7 +13,7 @@ import { InputGroup } from "@/components/ui/input-group";
 import { ResultCard } from "@/components/ui/result-card";
 import { useToast } from "@/components/ui/toast";
 import { CardPreview } from "@/features/venta/card-preview";
-import { VentaSchema, type VentaValues } from "@/features/venta/schema";
+import { HOLDER_MAX_LENGTH, VentaSchema, type VentaValues } from "@/features/venta/schema";
 
 const emptyForm: VentaValues = { importe: "", nombreTitular: "", numeroTarjeta: "", fechaExpiracion: "", cvv: "" };
 
@@ -94,6 +95,8 @@ export function SaleForm() {
             size="lg"
             inputMode="decimal"
             placeholder="0.00"
+            maxLength={9}
+            format={formatAmount}
             error={errors.importe?.message}
             {...register("importe")}
           />
@@ -103,6 +106,8 @@ export function SaleForm() {
             icon="bi-person"
             placeholder="Como aparece en la tarjeta"
             autoComplete="cc-name"
+            maxLength={HOLDER_MAX_LENGTH}
+            format={formatHolderName}
             error={errors.nombreTitular?.message}
             {...register("nombreTitular")}
           />
@@ -113,6 +118,8 @@ export function SaleForm() {
             placeholder="0000 0000 0000 0000"
             inputMode="numeric"
             autoComplete="cc-number"
+            maxLength={19}
+            format={formatCardNumber}
             numeric
             trailing={<i className="bi bi-credit-card-2-back" />}
             error={errors.numeroTarjeta?.message}
@@ -126,6 +133,8 @@ export function SaleForm() {
               placeholder="MM/AA"
               inputMode="numeric"
               autoComplete="cc-exp"
+              maxLength={5}
+              format={formatExpiry}
               error={errors.fechaExpiracion?.message}
               {...register("fechaExpiracion")}
             />
@@ -136,6 +145,8 @@ export function SaleForm() {
               placeholder="•••"
               inputMode="numeric"
               autoComplete="cc-csc"
+              maxLength={3}
+              format={digitsOnly(3)}
               revealable
               revealLabels={["Mostrar CVV", "Ocultar CVV"]}
               error={errors.cvv?.message}

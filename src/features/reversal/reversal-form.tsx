@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import type { OperationResult, ReversalConfig, ReversalType } from "@/types";
 import { formatDateTime } from "@/lib/format";
+import { digitsOnly, formatCardNumber } from "@/lib/input-format";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -128,6 +129,8 @@ export function ReversalForm({ type, configs }: ReversalFormProps) {
               icon="bi-hash"
               placeholder="8 dígitos"
               inputMode="numeric"
+              maxLength={8}
+              format={digitsOnly(8)}
               numeric
               help="Lo encuentras en el comprobante de la venta."
               error={errors.referenciaFinanciera?.message}
@@ -139,6 +142,9 @@ export function ReversalForm({ type, configs }: ReversalFormProps) {
               icon="bi-credit-card"
               placeholder="0000 0000 0000 0000"
               inputMode="numeric"
+              autoComplete="cc-number"
+              maxLength={19}
+              format={formatCardNumber}
               numeric
               error={errors.numeroTarjeta?.message}
               {...register("numeroTarjeta")}

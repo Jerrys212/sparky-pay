@@ -87,6 +87,7 @@ export function LoginForm({ demoAccess }: { demoAccess: DemoAccess[] }) {
           tone="auth"
           placeholder="Ingresa tu usuario"
           autoComplete="username"
+          maxLength={30}
           error={errors.username?.message}
           {...register("username")}
         />
@@ -97,6 +98,7 @@ export function LoginForm({ demoAccess }: { demoAccess: DemoAccess[] }) {
           tone="auth"
           placeholder="••••••••"
           autoComplete="current-password"
+          maxLength={64}
           revealable
           revealLabels={["Mostrar contraseña", "Ocultar contraseña"]}
           error={errors.password?.message}

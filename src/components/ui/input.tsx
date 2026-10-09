@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type InputHTMLAttributes, type ReactNode, type Ref } from "react";
+import { useId, useState, type ChangeEvent, type InputHTMLAttributes, type ReactNode, type Ref } from "react";
 import { cn } from "@/lib/cn";
 
 export type InputState = "default" | "focus" | "error";
@@ -35,6 +35,18 @@ export function Field({ id, label, help, error, children, className }: FieldProp
   );
 }
 
+export function withFormat(
+  format: ((value: string) => string) | undefined,
+  onChange: ((event: ChangeEvent<HTMLInputElement>) => void) | undefined,
+) {
+  if (!format) return onChange;
+  return (event: ChangeEvent<HTMLInputElement>) => {
+    const formatted = format(event.target.value);
+    if (formatted !== event.target.value) event.target.value = formatted;
+    onChange?.(event);
+  };
+}
+
 export const inputBaseClasses =
   "w-full rounded-lg border border-text-main/12 bg-card py-[.7rem] text-[.9rem] font-medium text-text-main outline-none transition-all duration-200 focus:border-forest-medium focus:ring-3 focus:ring-forest-medium/8 disabled:bg-surface-soft disabled:text-muted-green";
 
@@ -51,6 +63,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
   revealable?: boolean;
   revealLabels?: [show: string, hide: string];
   numeric?: boolean;
+  format?: (value: string) => string;
   tone?: "default" | "auth";
   fieldClassName?: string;
   ref?: Ref<HTMLInputElement>;
@@ -67,6 +80,8 @@ export function Input({
   revealable,
   revealLabels = ["Mostrar", "Ocultar"],
   numeric,
+  format,
+  onChange,
   tone = "default",
   type = "text",
   className,
@@ -113,6 +128,7 @@ export function Input({
             className,
           )}
           {...rest}
+          onChange={withFormat(format, onChange)}
         />
         {revealable ? (
           <button
