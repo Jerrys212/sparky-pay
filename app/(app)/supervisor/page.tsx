@@ -6,7 +6,7 @@ import { homeContent, supervisorOperations, users } from "@/content/mock-data";
 export const metadata: Metadata = { title: "Inicio" };
 
 export default function SupervisorHome() {
-  const items = supervisorOperations.map((op) => ({
+  const items = supervisorOperations.slice(0, 4).map((op) => ({
     id: op.id,
     icon: op.tipo === "Cancelación" ? "bi-x-circle" : "bi-arrow-counterclockwise",
     titular: op.titular,
