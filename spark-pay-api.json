@@ -1,5 +1,5 @@
 {
-  "uuid": "0b0f4095-3836-475d-903e-4d2b1b15d1f9",
+  "uuid": "8bcf448e-2fa4-4d7f-97f4-84ef324eedb4",
   "lastMigration": 33,
   "name": "Spark Pay API",
   "endpointPrefix": "api",
@@ -9,14 +9,14 @@
   "folders": [],
   "routes": [
     {
-      "uuid": "258fd589-b788-4bf9-8069-829c2aa8b568",
+      "uuid": "4458d293-ae17-45f1-9225-95ae38fe185e",
       "type": "http",
       "documentation": "Login. Usuarios: operador/Operador123 y supervisor/Supervisor123",
       "method": "post",
       "endpoint": "auth/login",
       "responses": [
         {
-          "uuid": "2b4c82ae-976c-48e1-b3a4-d51bf8d16d73",
+          "uuid": "6d9bb710-1f3d-4b9f-af12-57275597512d",
           "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Inicio de sesión exitoso\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTcGFyayBQYXkiLCJpYXQiOjE3OTA4MTI4MDAsImV4cCI6MTgyMjM0ODgwMCwiYXVkIjoid3d3LnNwYXJrcGF5LmNvbSIsInN1YiI6ImNhcmxvcy5yaXZlcmFAc3BhcmtwYXkuY29tIiwiR2l2ZW5OYW1lIjoiQ2FybG9zIiwiU3VybmFtZSI6IlJpdmVyYSIsIkVtYWlsIjoiY2FybG9zLnJpdmVyYUBzcGFya3BheS5jb20iLCJSb2xlIjoiU3VwZXJ2aXNvciIsInVzZXJuYW1lIjoic3VwZXJ2aXNvciJ9.jdaj1dRpoazCB9Qqymy1LyE8jmXFisMiwbC0mmk3yU0\",\n    \"usuario\": {\n      \"nombre\": \"Carlos Rivera\",\n      \"rol\": \"Supervisor\"\n    }\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -50,7 +50,7 @@
           "callbacks": []
         },
         {
-          "uuid": "c260b952-9ed3-43a8-97a5-2d7b0a92f5b8",
+          "uuid": "80431dfc-428b-40cc-a800-abe516d3000b",
           "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Inicio de sesión exitoso\",\n  \"data\": {\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJTcGFyayBQYXkiLCJpYXQiOjE3OTA4MTI4MDAsImV4cCI6MTgyMjM0ODgwMCwiYXVkIjoid3d3LnNwYXJrcGF5LmNvbSIsInN1YiI6ImxhdXJhLm1lbmRlekBzcGFya3BheS5jb20iLCJHaXZlbk5hbWUiOiJMYXVyYSIsIlN1cm5hbWUiOiJNXHUwMGU5bmRleiIsIkVtYWlsIjoibGF1cmEubWVuZGV6QHNwYXJrcGF5LmNvbSIsIlJvbGUiOiJPcGVyYWRvciIsInVzZXJuYW1lIjoib3BlcmFkb3IifQ.7ho8TBDU4LvoLVtXZtWD2LtAhCgOWK45KiOOPNSYH88\",\n    \"usuario\": {\n      \"nombre\": \"Laura Méndez\",\n      \"rol\": \"Operador\"\n    }\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -84,7 +84,7 @@
           "callbacks": []
         },
         {
-          "uuid": "d8901e43-e698-455d-9b32-edce3c7f30cf",
+          "uuid": "52855978-6338-4c14-b897-3fc7a6ece3e1",
           "body": "{\n  \"codigo\": 400,\n  \"mensaje\": \"Usuario o contraseña incorrectos\"\n}",
           "latency": 0,
           "statusCode": 400,
@@ -108,14 +108,14 @@
       "streamingInterval": 0
     },
     {
-      "uuid": "c1787e5a-d145-45b6-8cd8-23e4f57d9ba0",
+      "uuid": "a55e9a80-dd97-48d4-94d1-30d92110a195",
       "type": "http",
       "documentation": "Venta. Tarjeta, vencimiento y CVV llegan cifrados con AES (base64).",
       "method": "post",
       "endpoint": "transacciones/venta",
       "responses": [
         {
-          "uuid": "c09283dd-6e8a-491f-8ac0-5bc3fd15761e",
+          "uuid": "9034fa66-4348-4065-985f-9ea82dc0ac30",
           "body": "{\n  \"codigo\": 400,\n  \"mensaje\": \"No se pudo procesar la venta. Verifica los datos e inténtalo de nuevo.\"\n}",
           "latency": 0,
           "statusCode": 400,
@@ -184,7 +184,7 @@
           "callbacks": []
         },
         {
-          "uuid": "022ee302-b2ef-4238-bd41-2de60e4e17d2",
+          "uuid": "f580b02f-0363-43ad-8014-f275d32f8e0a",
           "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Venta aprobada\",\n  \"data\": {\n    \"numeroAprobacion\": \"{{faker 'number.int' '{\"min\":100000,\"max\":999999}'}}\",\n    \"referenciaFinanciera\": \"{{faker 'number.int' '{\"min\":10000000,\"max\":99999999}'}}\",\n    \"tarjeta\": \"{{faker 'number.int' '{\"min\":4000,\"max\":5999}'}}*****{{faker 'string.numeric' 4}}\",\n    \"importe\": {{body 'importe' 0}},\n    \"nombreTitular\": \"{{body 'nombreTitular'}}\",\n    \"tipo\": \"Venta\",\n    \"estatus\": \"Aprobada\",\n    \"fecha\": \"{{now \"yyyy-MM-dd'T'HH:mm:ss\"}}\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -208,14 +208,14 @@
       "streamingInterval": 0
     },
     {
-      "uuid": "651ae7ad-9c40-46a3-80aa-c36ad17d6f5b",
+      "uuid": "1e0dbe85-fffb-46e8-8da7-8e71753bafb0",
       "type": "http",
       "documentation": "Consulta de transacciones aprobadas (12 registros).",
       "method": "get",
       "endpoint": "transacciones",
       "responses": [
         {
-          "uuid": "44f750ea-3ce1-4f9a-927f-bfd9938f2566",
+          "uuid": "2b1eebac-2bc8-46d3-ab7a-46eedbabd790",
           "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Consulta exitosa\",\n  \"total\": 12,\n  \"data\": [\n    {\n      \"id\": 1,\n      \"numeroAprobacion\": \"439563\",\n      \"referenciaFinanciera\": \"30246633\",\n      \"tarjeta\": \"5204*****1791\",\n      \"nombreTitular\": \"María González\",\n      \"importe\": 85.0,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-08T10:52:00\"\n    },\n    {\n      \"id\": 2,\n      \"numeroAprobacion\": \"661913\",\n      \"referenciaFinanciera\": \"22633920\",\n      \"tarjeta\": \"4931*****1950\",\n      \"nombreTitular\": \"José Hernández\",\n      \"importe\": 1250.5,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-08T17:13:00\"\n    },\n    {\n      \"id\": 3,\n      \"numeroAprobacion\": \"139317\",\n      \"referenciaFinanciera\": \"21535642\",\n      \"tarjeta\": \"5204*****7851\",\n      \"nombreTitular\": \"Ana López\",\n      \"importe\": 349.9,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-07T10:15:00\"\n    },\n    {\n      \"id\": 4,\n      \"numeroAprobacion\": \"195119\",\n      \"referenciaFinanciera\": \"83960310\",\n      \"tarjeta\": \"5204*****1968\",\n      \"nombreTitular\": \"Luis Martínez\",\n      \"importe\": 4200.0,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-07T18:07:00\"\n    },\n    {\n      \"id\": 5,\n      \"numeroAprobacion\": \"334083\",\n      \"referenciaFinanciera\": \"94641177\",\n      \"tarjeta\": \"4766*****2013\",\n      \"nombreTitular\": \"Fernanda Ruiz\",\n      \"importe\": 615.75,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-06T18:37:00\"\n    },\n    {\n      \"id\": 6,\n      \"numeroAprobacion\": \"515949\",\n      \"referenciaFinanciera\": \"16655764\",\n      \"tarjeta\": \"5579*****1763\",\n      \"nombreTitular\": \"Jorge Ramírez\",\n      \"importe\": 99.99,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-06T17:54:00\"\n    },\n    {\n      \"id\": 7,\n      \"numeroAprobacion\": \"239643\",\n      \"referenciaFinanciera\": \"48870700\",\n      \"tarjeta\": \"5204*****3363\",\n      \"nombreTitular\": \"Sofía Torres\",\n      \"importe\": 1890.0,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-05T17:07:00\"\n    },\n    {\n      \"id\": 8,\n      \"numeroAprobacion\": \"698646\",\n      \"referenciaFinanciera\": \"51403729\",\n      \"tarjeta\": \"4766*****3961\",\n      \"nombreTitular\": \"Diego Flores\",\n      \"importe\": 230.4,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-05T10:37:00\"\n    },\n    {\n      \"id\": 9,\n      \"numeroAprobacion\": \"698951\",\n      \"referenciaFinanciera\": \"95753514\",\n      \"tarjeta\": \"5579*****7101\",\n      \"nombreTitular\": \"Valeria Castillo\",\n      \"importe\": 2750.0,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-04T10:35:00\"\n    },\n    {\n      \"id\": 10,\n      \"numeroAprobacion\": \"846702\",\n      \"referenciaFinanciera\": \"18427393\",\n      \"tarjeta\": \"4766*****1976\",\n      \"nombreTitular\": \"Ricardo Morales\",\n      \"importe\": 560.0,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-04T18:13:00\"\n    },\n    {\n      \"id\": 11,\n      \"numeroAprobacion\": \"620528\",\n      \"referenciaFinanciera\": \"81366283\",\n      \"tarjeta\": \"5204*****6146\",\n      \"nombreTitular\": \"Camila Jiménez\",\n      \"importe\": 1420.3,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-03T16:37:00\"\n    },\n    {\n      \"id\": 12,\n      \"numeroAprobacion\": \"575198\",\n      \"referenciaFinanciera\": \"58530762\",\n      \"tarjeta\": \"4931*****5070\",\n      \"nombreTitular\": \"Andrés Vargas\",\n      \"importe\": 780.15,\n      \"tipo\": \"Venta\",\n      \"estatus\": \"Aprobada\",\n      \"fecha\": \"2026-10-03T11:44:00\"\n    }\n  ]\n}",
           "latency": 0,
           "statusCode": 200,
@@ -270,14 +270,14 @@
       "streamingInterval": 0
     },
     {
-      "uuid": "6c12491e-8a7c-45da-8062-05f1bcd12fa7",
+      "uuid": "3b95c9d0-f95f-4590-9a41-77efd61f84d5",
       "type": "http",
       "documentation": "Cancelación. Referencia financiera de 8 dígitos y número de tarjeta.",
       "method": "patch",
       "endpoint": "transacciones/cancelacion",
       "responses": [
         {
-          "uuid": "f6730798-7fe0-41ce-8c5a-1b987afb584a",
+          "uuid": "4b7c8139-e6d9-4a48-b2b2-29deea8e4e7d",
           "body": "{\n  \"codigo\": 400,\n  \"mensaje\": \"No se encontró una venta con esa referencia o la tarjeta no es válida.\"\n}",
           "latency": 0,
           "statusCode": 400,
@@ -311,7 +311,7 @@
           "callbacks": []
         },
         {
-          "uuid": "eea64eac-74fa-4f69-a264-1585613f9d3e",
+          "uuid": "f56dd56f-a687-4d81-b5be-0cfd9f85f5ac",
           "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Cancelación aplicada\",\n  \"data\": {\n    \"numeroAprobacion\": \"{{faker 'number.int' '{\"min\":100000,\"max\":999999}'}}\",\n    \"referenciaFinanciera\": \"{{body 'referenciaFinanciera'}}\",\n    \"tarjeta\": \"{{substr (body 'numeroTarjeta') 0 4}}*****{{substr (body 'numeroTarjeta') -4 4}}\",\n    \"tipo\": \"Cancelación\",\n    \"estatus\": \"Aplicado\",\n    \"fecha\": \"{{now \"yyyy-MM-dd'T'HH:mm:ss\"}}\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -335,14 +335,14 @@
       "streamingInterval": 0
     },
     {
-      "uuid": "8e501a6b-befb-40eb-b61f-c7cbdd492f24",
+      "uuid": "57798563-b7bd-4c69-8eff-acc895fbba40",
       "type": "http",
       "documentation": "Devolución. Referencia financiera de 8 dígitos y número de tarjeta.",
       "method": "patch",
       "endpoint": "transacciones/devolucion",
       "responses": [
         {
-          "uuid": "82020138-eb9a-4660-8b92-737e567ec30e",
+          "uuid": "77f26ce2-edfd-4522-8eca-d52f65c389d3",
           "body": "{\n  \"codigo\": 400,\n  \"mensaje\": \"No se encontró una venta con esa referencia o la tarjeta no es válida.\"\n}",
           "latency": 0,
           "statusCode": 400,
@@ -376,7 +376,7 @@
           "callbacks": []
         },
         {
-          "uuid": "001a08bc-be3e-4b41-a2d9-d92a2d76ba97",
+          "uuid": "1b4e62d8-a27f-4e84-9710-1256cc3bc74c",
           "body": "{\n  \"codigo\": 200,\n  \"mensaje\": \"Devolución aplicada\",\n  \"data\": {\n    \"numeroAprobacion\": \"{{faker 'number.int' '{\"min\":100000,\"max\":999999}'}}\",\n    \"referenciaFinanciera\": \"{{body 'referenciaFinanciera'}}\",\n    \"tarjeta\": \"{{substr (body 'numeroTarjeta') 0 4}}*****{{substr (body 'numeroTarjeta') -4 4}}\",\n    \"tipo\": \"Devolución\",\n    \"estatus\": \"Aplicado\",\n    \"fecha\": \"{{now \"yyyy-MM-dd'T'HH:mm:ss\"}}\"\n  }\n}",
           "latency": 0,
           "statusCode": 200,
@@ -403,15 +403,15 @@
   "rootChildren": [
     {
       "type": "route",
-      "uuid": "258fd589-b788-4bf9-8069-829c2aa8b568"
+      "uuid": "4458d293-ae17-45f1-9225-95ae38fe185e"
     },
     {
       "type": "route",
-      "uuid": "c1787e5a-d145-45b6-8cd8-23e4f57d9ba0"
+      "uuid": "a55e9a80-dd97-48d4-94d1-30d92110a195"
     },
     {
       "type": "route",
-      "uuid": "651ae7ad-9c40-46a3-80aa-c36ad17d6f5b"
+      "uuid": "1e0dbe85-fffb-46e8-8da7-8e71753bafb0"
     },
     {
       "type": "route",
@@ -419,11 +419,11 @@
     },
     {
       "type": "route",
-      "uuid": "6c12491e-8a7c-45da-8062-05f1bcd12fa7"
+      "uuid": "3b95c9d0-f95f-4590-9a41-77efd61f84d5"
     },
     {
       "type": "route",
-      "uuid": "8e501a6b-befb-40eb-b61f-c7cbdd492f24"
+      "uuid": "57798563-b7bd-4c69-8eff-acc895fbba40"
     }
   ],
   "proxyMode": false,
