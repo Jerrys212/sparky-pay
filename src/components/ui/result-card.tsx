@@ -1,6 +1,6 @@
 import type { ResultRow } from "@/types";
-import { Badge } from "./Badge";
-import { Button } from "./Button";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 
 interface ResultCardProps {
   title: string;

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/PageHeader";
-import { SaleForm } from "@/components/SaleForm";
-import { MOCK_LATENCY_MS, saleResult, toastMessages } from "@/lib/mock-data";
+import { PageHeader } from "@/components/layout/page-header";
+import { SaleForm } from "@/features/venta/sale-form";
+import { MOCK_LATENCY_MS, saleResult, toastMessages } from "@/content/mock-data";
 
 export const metadata: Metadata = { title: "Nueva venta" };
 

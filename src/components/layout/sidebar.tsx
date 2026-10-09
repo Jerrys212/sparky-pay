@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import type { NavSection, User } from "@/types";
 import { cn } from "@/lib/cn";
-import { Avatar } from "./Avatar";
-import { RoleBadge } from "./Badge";
-import { useSidebar } from "./SidebarContext";
+import { Avatar } from "@/components/ui/avatar";
+import { RoleBadge } from "@/components/ui/badge";
+import { useSidebar } from "@/components/layout/sidebar-context";
 
 interface SidebarProps {
   sections: NavSection[];

@@ -4,13 +4,13 @@ import { useCallback, useState } from "react";
 import type { OperationResult, ReversalConfig, ReversalType, ToastInput } from "@/types";
 import { formatDateTime, formatLongDateTime } from "@/lib/format";
 import { useSimulatedRequest } from "@/lib/use-simulated-request";
-import { Button } from "./Button";
-import { Card } from "./Card";
-import { Input } from "./Input";
-import { Modal } from "./Modal";
-import { ResultCard } from "./ResultCard";
-import { Tabs } from "./Tabs";
-import { useToast } from "./Toast";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Modal } from "@/components/ui/modal";
+import { ResultCard } from "@/components/ui/result-card";
+import { Tabs } from "@/components/ui/tabs";
+import { useToast } from "@/components/ui/toast";
 
 export interface ReversalMockResult {
   aprobacion: string;

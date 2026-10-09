@@ -3,10 +3,10 @@
 import { useState } from "react";
 import type { TransactionRow } from "@/types";
 import { cn } from "@/lib/cn";
-import { Badge } from "./Badge";
-import { Button } from "./Button";
-import { EmptyState } from "./EmptyState";
-import { Input } from "./Input";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Input } from "@/components/ui/input";
 
 interface TransactionsTableProps {
   rows: TransactionRow[];

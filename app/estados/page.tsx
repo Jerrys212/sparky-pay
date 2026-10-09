@@ -1,17 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { BadgeVariant } from "@/types";
-import { Badge, RoleBadge } from "@/components/Badge";
-import { Button } from "@/components/Button";
-import { Card } from "@/components/Card";
-import { EmptyState } from "@/components/EmptyState";
-import { Input } from "@/components/Input";
-import { InputGroup } from "@/components/InputGroup";
-import { ResultCard } from "@/components/ResultCard";
-import { TableSkeleton } from "@/components/TableSkeleton";
-import { Toast } from "@/components/Toast";
-import { ToastDemoButtons } from "@/components/ToastDemoButtons";
-import { sampleCancelReceipt, sampleSaleReceipt, toastMessages } from "@/lib/mock-data";
+import { Badge, RoleBadge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { EmptyState } from "@/components/ui/empty-state";
+import { Input } from "@/components/ui/input";
+import { InputGroup } from "@/components/ui/input-group";
+import { ResultCard } from "@/components/ui/result-card";
+import { TableSkeleton } from "@/components/ui/table-skeleton";
+import { Toast } from "@/components/ui/toast";
+import { ToastDemoButtons } from "@/components/ui/toast-demo-buttons";
+import { sampleCancelReceipt, sampleSaleReceipt, toastMessages } from "@/content/mock-data";
 
 export const metadata: Metadata = { title: "Sistema visual" };
 

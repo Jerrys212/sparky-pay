@@ -1,6 +1,6 @@
 import type { TransactionListItem } from "@/types";
 import { cn } from "@/lib/cn";
-import { Badge } from "./Badge";
+import { Badge } from "@/components/ui/badge";
 
 export function TransactionItem({ icon, titular, detail, amount, time, typeBadge, statusBadge }: TransactionListItem) {
   return (

@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import type { Role } from "@/types";
-import { roleLabels } from "@/lib/mock-data";
+import { roleLabels } from "@/content/mock-data";
 import { cn } from "@/lib/cn";
-import { Input } from "./Input";
+import { Input } from "@/components/ui/input";
 
 interface DemoAccess {
   role: Role;

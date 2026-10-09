@@ -10,7 +10,7 @@ import type {
   Transaction,
   User,
 } from "@/types";
-import { formatMoney } from "./format";
+import { formatMoney } from "@/lib/format";
 
 export const users: Record<Role, User> = {
   operador: {

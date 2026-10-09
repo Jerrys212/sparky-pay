@@ -1,12 +1,12 @@
 import Link from "next/link";
 import type { HomeContent, Role, TransactionListItem, User } from "@/types";
-import { ActionCard } from "./ActionCard";
-import { Card } from "./Card";
-import { PageHeader } from "./PageHeader";
-import { RoleCard } from "./RoleCard";
-import { StatCard } from "./StatCard";
-import { TodayPill } from "./TodayPill";
-import { TransactionItem } from "./TransactionItem";
+import { ActionCard } from "@/features/home/action-card";
+import { Card } from "@/components/ui/card";
+import { PageHeader } from "@/components/layout/page-header";
+import { RoleCard } from "@/features/home/role-card";
+import { StatCard } from "@/components/ui/stat-card";
+import { TodayPill } from "@/components/ui/today-pill";
+import { TransactionItem } from "@/features/consultas/transaction-item";
 
 interface RoleHomeProps {
   role: Role;

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { Spinner } from "./AsteriskShape";
+import { Spinner } from "@/components/ui/asterisk-shape";
 
 export type ButtonVariant = "primary" | "secondary" | "light" | "danger" | "outline-primary";
 export type ButtonSize = "sm" | "md" | "lg";

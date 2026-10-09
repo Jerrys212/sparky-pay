@@ -1,8 +1,8 @@
 "use client";
 
 import type { ToastInput } from "@/types";
-import { Button } from "./Button";
-import { useToast } from "./Toast";
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/components/ui/toast";
 
 export function ToastDemoButtons({ success, error }: { success: ToastInput; error: ToastInput }) {
   const toast = useToast();

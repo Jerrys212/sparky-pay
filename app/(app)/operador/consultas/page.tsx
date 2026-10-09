@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/PageHeader";
-import { CompactStatCard } from "@/components/StatCard";
-import { TransactionsTable } from "@/components/TransactionsTable";
+import { PageHeader } from "@/components/layout/page-header";
+import { CompactStatCard } from "@/components/ui/stat-card";
+import { TransactionsTable } from "@/features/consultas/transactions-table";
 import { formatDay, formatMaskedCard, formatMoney, formatTime } from "@/lib/format";
-import { PAGE_SIZE, transactions, transactionsSummary } from "@/lib/mock-data";
+import { PAGE_SIZE, transactions, transactionsSummary } from "@/content/mock-data";
 
 export const metadata: Metadata = { title: "Consultas" };
 

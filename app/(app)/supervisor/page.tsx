@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { RoleHome } from "@/components/RoleHome";
+import { RoleHome } from "@/features/home/role-home";
 import { formatMaskedCard, formatMoney } from "@/lib/format";
-import { homeContent, supervisorOperations, users } from "@/lib/mock-data";
+import { homeContent, supervisorOperations, users } from "@/content/mock-data";
 
 export const metadata: Metadata = { title: "Inicio" };
 

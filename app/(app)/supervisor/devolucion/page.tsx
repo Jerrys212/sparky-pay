@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import { PageHeader } from "@/components/PageHeader";
-import { ReversalForm } from "@/components/ReversalForm";
-import { MOCK_LATENCY_MS, reversalConfigs, reversalResult, toastMessages } from "@/lib/mock-data";
+import { PageHeader } from "@/components/layout/page-header";
+import { ReversalForm } from "@/features/reversal/reversal-form";
+import { MOCK_LATENCY_MS, reversalConfigs, reversalResult, toastMessages } from "@/content/mock-data";
 
 export const metadata: Metadata = { title: "Devolución" };
 

@@ -4,13 +4,13 @@ import { useState } from "react";
 import type { OperationResult, ToastInput } from "@/types";
 import { formatDateTime, formatLongDateTime, formatMoney } from "@/lib/format";
 import { useSimulatedRequest } from "@/lib/use-simulated-request";
-import { Button } from "./Button";
-import { Card } from "./Card";
-import { CardPreview } from "./CardPreview";
-import { Input } from "./Input";
-import { InputGroup } from "./InputGroup";
-import { ResultCard } from "./ResultCard";
-import { useToast } from "./Toast";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { CardPreview } from "@/features/venta/card-preview";
+import { Input } from "@/components/ui/input";
+import { InputGroup } from "@/components/ui/input-group";
+import { ResultCard } from "@/components/ui/result-card";
+import { useToast } from "@/components/ui/toast";
 
 export interface SaleMockResult {
   aprobacion: string;

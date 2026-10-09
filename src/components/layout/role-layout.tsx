@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import type { Role } from "@/types";
-import { navigation, users } from "@/lib/mock-data";
-import { AppShell } from "./AppShell";
+import { navigation, users } from "@/content/mock-data";
+import { AppShell } from "@/components/layout/app-shell";
 
 export function RoleLayout({ role, children }: { role: Role; children: ReactNode }) {
   return (

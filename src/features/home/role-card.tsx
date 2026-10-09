@@ -1,6 +1,6 @@
 import type { Role } from "@/types";
-import { AsteriskShape } from "./AsteriskShape";
-import { RoleBadge } from "./Badge";
+import { AsteriskShape } from "@/components/ui/asterisk-shape";
+import { RoleBadge } from "@/components/ui/badge";
 
 export function RoleCard({ role, permissions }: { role: Role; permissions: string }) {
   return (

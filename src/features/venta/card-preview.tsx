@@ -1,4 +1,4 @@
-import { AsteriskShape } from "./AsteriskShape";
+import { AsteriskShape } from "@/components/ui/asterisk-shape";
 
 interface CardPreviewProps {
   number: string;

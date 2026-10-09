@@ -3,10 +3,10 @@
 import type { ReactNode } from "react";
 import type { NavSection, User } from "@/types";
 import { cn } from "@/lib/cn";
-import { Footer } from "./Footer";
-import { Navbar } from "./Navbar";
-import { Sidebar } from "./Sidebar";
-import { SidebarProvider, useSidebar } from "./SidebarContext";
+import { Footer } from "@/components/layout/footer";
+import { Navbar } from "@/components/layout/navbar";
+import { Sidebar } from "@/components/layout/sidebar";
+import { SidebarProvider, useSidebar } from "@/components/layout/sidebar-context";
 
 interface AppShellProps {
   user: User;

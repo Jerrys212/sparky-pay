@@ -2,7 +2,7 @@
 
 import { useId, type InputHTMLAttributes, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { Field } from "./Input";
+import { Field } from "@/components/ui/input";
 
 interface InputGroupProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "size" | "prefix"> {
   label?: ReactNode;

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { AuthShell } from "@/components/AuthShell";
-import { ButtonLink } from "@/components/Button";
+import { AuthShell } from "@/components/layout/auth-shell";
+import { ButtonLink } from "@/components/ui/button";
 
 export const metadata: Metadata = { title: "Sin acceso" };
 

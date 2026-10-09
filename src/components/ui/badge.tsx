@@ -1,6 +1,6 @@
 import type { BadgeVariant, Role } from "@/types";
 import { cn } from "@/lib/cn";
-import { roleLabels } from "@/lib/mock-data";
+import { roleLabels } from "@/content/mock-data";
 
 const variantClasses: Record<BadgeVariant, { pill: string; dot: string }> = {
   Aprobada: { pill: "bg-sys-green/10 text-sys-green-text", dot: "bg-sys-green" },

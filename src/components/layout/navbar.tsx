@@ -3,10 +3,10 @@
 import Link from "next/link";
 import type { User } from "@/types";
 import { cn } from "@/lib/cn";
-import { Avatar } from "./Avatar";
-import { RoleBadge } from "./Badge";
-import { Dropdown } from "./Dropdown";
-import { useSidebar } from "./SidebarContext";
+import { Avatar } from "@/components/ui/avatar";
+import { RoleBadge } from "@/components/ui/badge";
+import { Dropdown } from "@/components/ui/dropdown";
+import { useSidebar } from "@/components/layout/sidebar-context";
 
 const squareButton =
   "flex size-[42px] items-center justify-center rounded-lg border border-border-light bg-card text-text-main shadow-sm transition-all duration-200 hover:bg-border-light hover:text-forest-medium";
