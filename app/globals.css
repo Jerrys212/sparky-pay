@@ -1,0 +1,164 @@
+@import "tailwindcss";
+
+@theme {
+  --breakpoint-sm: 36rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 62rem;
+  --breakpoint-xl: 75rem;
+  --breakpoint-2xl: 87.5rem;
+
+  --font-sans: var(--font-jakarta), system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --color-canvas: #f4f6f5;
+  --color-forest-dark: #051c12;
+  --color-forest-medium: #072f1f;
+  --color-forest-light: #1a3e30;
+  --color-lime: #b4f105;
+  --color-lime-hover: #c1f824;
+  --color-lime-translucent: rgba(180, 241, 5, 0.15);
+  --color-text-main: #0b130f;
+  --color-muted-green: #6c7e75;
+  --color-sidebar-muted: #879a91;
+  --color-card: #ffffff;
+  --color-border-light: #e9efef;
+  --color-surface-soft: #f8faf9;
+  --color-surface-soft-hover: #eef2f0;
+  --color-sys-green: #22c55e;
+  --color-sys-green-bg: #dcfce7;
+  --color-sys-red: #ef4444;
+  --color-sys-red-bg: #fee2e2;
+  --color-sys-orange: #f97316;
+  --color-sys-orange-bg: #ffedd5;
+
+  /* Darker text shades: the base sys-* colors fail AA on their pale backgrounds. */
+  --color-sys-green-text: #15803d;
+  --color-sys-red-text: #b91c1c;
+  --color-sys-red-strong: #dc2626;
+  --color-sys-orange-text: #c2410c;
+  --color-sys-orange-deep: #9a3412;
+  --color-divider: #cbd5e1;
+  --color-divider-hover: #94a3b8;
+  --color-chip-gold: #e8c872;
+  --color-chip-gold-dark: #c9a04a;
+  --color-chip-line: rgba(80, 55, 10, 0.45);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+  --radius-xxl: 24px;
+
+  --shadow-sm: 0 2px 8px rgba(11, 19, 15, 0.02);
+  --shadow-md: 0 10px 30px rgba(11, 19, 15, 0.04);
+  --shadow-lg: 0 20px 50px rgba(11, 19, 15, 0.08);
+  --shadow-lift: 0 30px 60px rgba(11, 19, 15, 0.12);
+  --shadow-tab: 0 2px 8px rgba(11, 19, 15, 0.06);
+  --shadow-glow: 0 10px 24px rgba(180, 241, 5, 0.15);
+
+  --spacing-sidebar: 280px;
+  --spacing-sidebar-min: 80px;
+
+  --animate-status-pulse: statusPulse 2s infinite;
+  --animate-asterisk-12: asteriskSpin 12s linear infinite;
+  --animate-asterisk-15: asteriskSpin 15s linear infinite;
+  --animate-asterisk-20: asteriskSpin 20s linear infinite;
+  --animate-spinner: asteriskSpin 0.7s linear infinite;
+  --animate-fade-in: fadeIn 0.2s;
+  --animate-modal-in: modalIn 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-toast-in: toastIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-result-in: resultIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --animate-toast-bar: toastBar 4s linear forwards;
+  --animate-shimmer: shimmer 1.4s ease-in-out infinite;
+
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+
+  @keyframes statusPulse {
+    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+  }
+  @keyframes asteriskSpin { to { transform: rotate(360deg); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes toastIn {
+    from { opacity: 0; transform: translateX(16px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes resultIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes toastBar { from { width: 100%; } to { width: 0%; } }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-text-main);
+    font-family: var(--font-sans);
+    font-size: 0.925rem;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-text-main);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+
+  a {
+    color: var(--color-forest-medium);
+    text-decoration: none;
+    transition: color 0.25s;
+  }
+  a:hover { color: var(--color-lime-hover); }
+
+  button, a, summary, label[for], [role="button"], select,
+  input[type="checkbox"], input[type="radio"] {
+    cursor: pointer;
+  }
+  :disabled { cursor: not-allowed; }
+
+  input::placeholder {
+    color: var(--color-muted-green);
+    opacity: 0.5;
+  }
+
+  :focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--color-forest-medium) 25%, transparent);
+    outline-offset: 2px;
+  }
+  input:focus-visible { outline: none; }
+  aside :focus-visible {
+    outline-color: color-mix(in srgb, var(--color-lime) 60%, transparent);
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-divider);
+    border-radius: 10px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-divider-hover); }
+}
+
+@utility shimmer-bar {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface-soft-hover) 25%,
+    var(--color-surface-soft) 50%,
+    var(--color-surface-soft-hover) 75%
+  );
+  background-size: 200% 100%;
+}
