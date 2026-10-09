@@ -16,36 +16,27 @@ interface ModalProps {
 
 export function Modal({ open, onClose, title, description, icon, iconClassName, children, footer }: ModalProps) {
   const titleId = useId();
-  const panelRef = useRef<HTMLDivElement>(null);
+  const dialogRef = useRef<HTMLDialogElement>(null);
 
   useEffect(() => {
-    if (!open) return;
-    const previous = document.activeElement as HTMLElement | null;
-    panelRef.current?.querySelector<HTMLElement>("button")?.focus();
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      previous?.focus();
-    };
-  }, [open, onClose]);
-
-  if (!open) return null;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+    if (open && !dialog.open) dialog.showModal();
+    else if (!open && dialog.open) dialog.close();
+  }, [open]);
 
   return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-[1080] flex animate-fade-in items-center justify-center bg-forest-dark/45 p-4 backdrop-blur-[4px]"
+    <dialog
+      ref={dialogRef}
+      aria-labelledby={titleId}
+      onClose={onClose}
+      onClick={(e) => {
+        if (e.target === dialogRef.current) onClose();
+      }}
+      className="m-0 max-h-none max-w-none bg-transparent p-4"
     >
       <div
-        ref={panelRef}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-[440px] animate-modal-in rounded-xxl bg-card p-7 shadow-lg"
+        className="mx-auto mt-[12vh] w-full max-w-[440px] animate-modal-in rounded-xxl bg-card p-7 shadow-lg"
       >
         {icon && (
           <span className={cn("mb-4 flex size-[52px] items-center justify-center rounded-full text-[1.35rem]", iconClassName)}>
@@ -59,7 +50,7 @@ export function Modal({ open, onClose, title, description, icon, iconClassName, 
         {children}
         {footer && <div className="mt-6 flex flex-wrap justify-end gap-3">{footer}</div>}
       </div>
-    </div>
+    </dialog>
   );
 }
 

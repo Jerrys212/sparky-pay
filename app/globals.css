@@ -145,12 +145,30 @@
     outline-color: color-mix(in srgb, var(--color-lime) 60%, transparent);
   }
 
+  dialog { color: var(--color-text-main); }
+  dialog::backdrop {
+    background: color-mix(in srgb, var(--color-forest-dark) 45%, transparent);
+    backdrop-filter: blur(4px);
+    animation: fadeIn 0.2s;
+  }
+
   ::-webkit-scrollbar { width: 6px; height: 6px; }
   ::-webkit-scrollbar-thumb {
     background: var(--color-divider);
     border-radius: 10px;
   }
   ::-webkit-scrollbar-thumb:hover { background: var(--color-divider-hover); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 @utility shimmer-bar {
