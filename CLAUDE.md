@@ -31,67 +31,64 @@
 
 ## Project Structure
 
-This is a **landing page**, so the architecture is **section-based**. The unit of organization is a visual block of the page, and copy lives apart from UI.
+This is an **authenticated web payments terminal** (not a landing page), so the architecture is **feature-based**. The unit of organization is a business flow (login, venta, consultas, cancelación, devolución), and copy/data lives apart from UI. The `@/*` alias points at `src/*`.
 
 ```
-my-landing/
+spark-pay/
 ├── app/                          # Routes ONLY (App Router)
-│   ├── layout.tsx                # Root layout: fonts, metadata, <main>, Navbar/Footer
-│   ├── page.tsx                  # Composes sections, nothing else
+│   ├── layout.tsx                # Root layout: fonts, metadata, providers
+│   ├── page.tsx                  # Redirects to /login
 │   ├── not-found.tsx
-│   ├── sitemap.ts
-│   ├── robots.ts
 │   ├── globals.css               # Design tokens (@theme)
-│   └── (legal)/
-│       ├── privacy/page.tsx
-│       └── terms/page.tsx
+│   ├── (auth)/login/page.tsx
+│   ├── (app)/
+│   │   ├── operador/             # + venta, consultas
+│   │   └── supervisor/           # + cancelacion, devolucion
+│   └── api/                      # Route Handlers (BFF proxy to the mock backend)
+│       ├── auth/login/route.ts
+│       ├── auth/logout/route.ts
+│       └── transacciones/…/route.ts
 │
 ├── src/
-│   ├── sections/                 # One folder per landing block
-│   │   ├── hero/
-│   │   │   ├── hero.tsx          # Section entry (Server Component)
-│   │   │   └── hero-visual.tsx   # Subcomponents used only by this section
-│   │   ├── features/
-│   │   ├── pricing/
-│   │   │   ├── pricing.tsx
-│   │   │   └── billing-toggle.tsx  # "use client" leaf
-│   │   ├── testimonials/
-│   │   ├── faq/
-│   │   └── cta/
-│   │
-│   ├── content/                  # Copy & data: texts, plans, FAQs, testimonials
-│   │   ├── hero.ts
-│   │   ├── pricing.ts
-│   │   └── faq.ts
+│   ├── features/                 # One folder per business flow
+│   │   ├── auth/login-form.tsx   # "use client" leaf
+│   │   ├── venta/                # sale-form, card-preview
+│   │   ├── consultas/            # transactions-table, transaction-item
+│   │   ├── reversal/             # reversal-form (cancelación + devolución)
+│   │   └── home/                 # role-home, role-card, action-card
 │   │
 │   ├── components/
-│   │   ├── ui/                   # Own primitives (Button, Badge…), built with Tailwind
-│   │   └── layout/               # Navbar, Footer, Container, SectionHeading
+│   │   ├── ui/                   # Own primitives (Button, Badge, Input, Toast…)
+│   │   └── layout/               # AppShell, Navbar, Sidebar, Footer, PageHeader
 │   │
-│   ├── actions/                  # Server Actions ("use server")
-│   │   └── contact/
-│   │       ├── send-contact.ts
-│   │       └── schema.ts
+│   ├── content/                  # Copy & data: nav, role labels, toast messages…
+│   │   └── mock-data.ts
+│   │
+│   ├── actions/                  # Server Actions ("use server"), with their Zod schema
+│   │
+│   ├── types/                    # Shared domain types
 │   │
 │   └── lib/
-│       ├── utils.ts              # cn(), helpers
+│       ├── cn.ts                 # cn() + helpers
+│       ├── format.ts             # Intl money/date formatters
 │       ├── env.ts                # Validated env (Zod)
-│       ├── site.ts               # Site config: name, URL, socials, default SEO
-│       └── analytics.ts
+│       ├── api.ts                # Backend base URL + fetch helpers
+│       └── auth.ts               # JWT decode, role, cookie helpers
 │
-├── public/                       # Images, icons, OG image
+├── public/
+├── middleware.ts                 # Reads the auth cookie, guards routes by role
 ├── next.config.ts
 └── package.json
 ```
 
 ### Structure rules
 
-- **`app/page.tsx` only composes sections** in order (`<Hero /> <Features /> <Pricing /> …`). No markup or logic there.
-- **A section must not import from another section.** Anything shared goes to `src/components/` or `src/lib/`.
-- **Subcomponents live inside their section folder** until a second section needs them; only then move them to `src/components/`.
-- **Section variants** (e.g. a campaign hero) go in the same folder: `hero/hero-campaign.tsx`. Don't create a new section.
-- **No hardcoded copy in components.** Texts, prices, lists, links and image paths live in `src/content/`, typed with `satisfies` or an explicit type, so copy can change (or move to a CMS / i18n) without touching UI.
-- Don't create `hooks/`, `store/`, `context/` or `types/` folders preemptively. Add them only when something real needs them.
+- **`app/**/page.tsx` only composes features and layout**. No business logic or heavy markup there.
+- **A feature must not import from another feature.** Anything shared goes to `src/components/` or `src/lib/`.
+- **Subcomponents live inside their feature folder** until a second feature needs them; only then move them to `src/components/`.
+- **Feature variants** go in the same folder. Don't create a new feature for a variant.
+- **No hardcoded copy in components.** Texts, labels, lists and image paths live in `src/content/`, typed with `satisfies` or an explicit type, so copy can change without touching UI.
+- `src/types/` holds shared domain types. Don't create `hooks/`, `store/` or `context/` folders preemptively — add them only when something real needs them.
 
 ## Code Rules
 
@@ -108,10 +105,10 @@ my-landing/
 
 ### Server vs Client Components
 
-- **Default to Server Components.** Sections are server components.
+- **Default to Server Components.** Pages, layouts and feature entries are server components.
 - **`"use client"` only when there is no server/HTML/CSS alternative.** Before adding it, prefer native platform features: `<details>`/`<summary>`, `<dialog>`, the Popover API (`popover` + `popovertarget`, e.g. the mobile menu), CSS `:has()`, `@starting-style`, `aria-*`/`data-*` variants.
-- When it's unavoidable (e.g. scrolling without changing the URL, IntersectionObserver, a form), keep it in a **tiny, reusable leaf** (e.g. `ScrollLink`, a renderless observer) that server components compose. Never mark a section, layout component or whole navbar as client.
-- **Mutations go through Server Actions**, never client-side fetch.
+- When it's unavoidable (e.g. a form, IntersectionObserver, scrolling without changing the URL), keep it in a **tiny, reusable leaf** that server components compose. Never mark a page, a layout component or the whole navbar as client.
+- **Mutations go through Server Actions or BFF Route Handlers** (`app/api/*`), never direct client→backend fetch. The browser only talks to our own origin; the Route Handler/Action proxies to the mock backend and holds the JWT in an httpOnly cookie.
 
 ### Styling & Colors
 
@@ -157,21 +154,21 @@ my-landing/
 - No component library: primitives are built in-house, so a11y is our responsibility.
 - Every interactive element is keyboard-navigable, has a visible focus state and an accessible label.
 - **Every clickable element shows `cursor: pointer`** (disabled ones `not-allowed`). Tailwind v4 removed it from buttons, so it's set globally in `app/globals.css` (`@layer base`); custom clickable elements outside those selectors need `cursor-pointer`. Non-interactive elements (e.g. cards that aren't links) must not use it.
-- Prefer native elements before custom ones: `<button>` for actions, `<a>` for navigation, `<details>`/`<summary>` for the FAQ accordion, `<dialog>` for modals.
-- Custom interactive widgets must expose the right ARIA state (`aria-expanded`, `aria-pressed`, `aria-controls`); e.g. the mobile menu toggle and the billing toggle.
-- `<main>` is rendered once, in `app/layout.tsx`. Sections must not render their own `<main>`.
-- **Each section is a `<section>`** with `aria-labelledby` pointing at its heading and an `id` for anchor navigation (`#pricing`, `#faq`).
+- Prefer native elements before custom ones: `<button>` for actions, `<a>` for navigation, `<dialog>` for modals.
+- Custom interactive widgets must expose the right ARIA state (`aria-expanded`, `aria-pressed`, `aria-controls`); e.g. the mobile menu toggle and the sidebar collapse.
+- `<main>` is rendered once per page shell (the app shell for authenticated views, the auth shell for login). A component must not render a second `<main>`.
+- **Group related content in a `<section>`** with `aria-labelledby` pointing at its heading.
 - Use `<header>`, `<nav>`, `<footer>`, `<aside>` where they apply; `<div>` only for pure layout wrappers.
-- **One `<h1>` per page** (in the hero); sections start at `<h2>`.
+- **One `<h1>` per page** (the page's main heading); other blocks start at `<h2>`.
 - Respect `prefers-reduced-motion` for animations.
 
 ## SEO & Performance
 
-- Define `metadata` (title, description, Open Graph, Twitter) in `app/layout.tsx`, using defaults from `src/lib/site.ts`; override per page when needed.
-- Keep `app/sitemap.ts` and `app/robots.ts` up to date.
-- **Images**: always `next/image` with `alt`, explicit sizes and `sizes`; the hero image uses `priority`.
+- This is a **private, authenticated app**: it must **not** be indexed. Set `robots: { index: false, follow: false }` in metadata; no sitemap, no Open Graph needed.
+- Define base `metadata` (title template, description) in `app/layout.tsx`; override `title` per page.
+- **Images**: always `next/image` with `alt`, explicit sizes and `sizes`.
 - **Fonts**: `next/font` only, no external font `<link>`.
-- The page should be statically rendered. Don't add dynamic APIs (`cookies()`, `headers()`, uncached fetch) without a reason.
+- Authenticated pages read the auth cookie, so they render dynamically — that's expected. Keep uncached backend fetches on the server (Route Handlers / Actions), not the client.
 - Keep client JS minimal: avoid heavy animation libraries for effects CSS can do.
 
 ## Testing
